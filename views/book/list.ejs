@@ -1,0 +1,44 @@
+<%- include('../inc/head', { css }) %> 
+<%- include('../inc/header') %> 
+<%- include('../inc/banner-book') %>
+<div class="list-wrapperw wrapper">
+	<%- include('../inc/title-bar') %>
+	<table class="book-tbl table table-hover table-striped text-center">
+		<thead class="thead-dark">
+			<tr>
+				<th><%= FIELD.NO %></th>
+				<th><%= FIELD.TITLE %></th>
+				<th><%= FIELD.WRITER %></th>
+				<th><%= FIELD.CONTENT %></th>
+				<th><%= FIELD.COVER %></th>
+				<th><%= FIELD.DATE %></th>
+				<th><%= FIELD.STATUS %></th>
+			</tr>
+		</thead>
+		<tbody>
+		<% for(let book of books) { %>
+			<tr data-idx="<%= book.idx %>" data-lang="<%= LANG %>">
+				<td><%= book.idx %></td>
+				<td><%= book.title %></td>
+				<td><%= book.writer %></td>
+				<td class="content-td">
+					<% if(book.icon) { %>
+						<img src="<%= book.icon %>" class="icon">
+					<% } %>&nbsp;
+					<%= book.content %>
+				</td>
+				<td class="cover-td">
+					<% if(book.cover) { %>
+						<img src="<%= book.cover %>" class="cover">
+					<% } %>
+				</td>
+				<td><%= book.createdAt %></td>
+				<td><%= book.status %></td>
+			</tr>
+		<% } %> 
+		</tbody>
+	</table>
+	<%- include('../inc/pager', { ...pager }) %>
+</div>
+
+<%- include('../inc/foot', { js }) %> 

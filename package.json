@@ -1,0 +1,23 @@
+{
+  "name": "28.shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "serve": "cross-env NODE_ENV=development nodemon app",
+    "build": "cross-env NODE_ENV=production nodemon app",
+    "start": "cross-env NODE_ENV=production pm2 start app.js",
+    "test": "cross-env NODE_ENV=development node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leejunheezz123/SHOP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Leejunheezz123/SHOP/issues"
+  },
+  "homepage": "https://github.com/Leejunheezz123/SHOP#readme"
+}
