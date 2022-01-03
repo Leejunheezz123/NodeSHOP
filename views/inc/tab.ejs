@@ -1,0 +1,7 @@
+<ul class="nav nav-tabs">
+  <% for (let v of links[paths[1]]) { %>
+  <li class="nav-item">
+    <a class="nav-link" href="<%=`/${paths[0]}/${paths[1]}/{v}`%>"> <%=v.name %> </a>
+  </li>
+  <% } %>
+</ul>

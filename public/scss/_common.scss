@@ -1,7 +1,7 @@
 @import "./mixins";
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap");
 
-html, body, /* h1, h2, h3, h4, h5, h6, p, */ div, form, /* input, textarea, */ table, td, th, header, section, aside, footer, article, nav, ul, ol, li {
+html, body,  h1, h2, h3, h4, h5, h6, p,  div, form, /* input, textarea, */ table, td, th, header, section, aside, footer, article, nav, ul, ol, li {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -74,82 +74,31 @@ a:not(.btn) {
 }
 
 .header-wrapper {
-  background-color: darkslategrey;
-  color: #f9f9f9;
-  display: flex;
-  align-items: center;
-
-  h1.logo {
-    font-size: 1.25em;
-    padding: 0.75em;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid $secondary-color;
+  .header-top {
+    border-top: 3px solid #575755;
+    @include flex($h: sapce-between, $v: flex-start);
+    h1.logo {
+      font-size: inherit;
+      line-height: 1;
+      margin-right: auto;
+      a {
+        @include abs;
+        top: 0;
+        left: 0;
+      }
+    }
+    .btn {
+      margin: 0.25em;
+    }
   }
-
   .navi-wrap {
-    display: flex;
-    margin-left: auto;
-
+    @include flex($h: center);
+    border-bottom: 1px solid $secondary-color;
     .navi {
-      padding: 1em 1.5em;
-
-      &.ex {
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-
       &:hover {
-        background-color: mistyrose;
-        color: darkslategrey;
-      }
-    }
-  }
-
-  a {
-    &:link,
-    &:visited,
-    &:hover,
-    &:active {
-      text-decoration: none;
-      color: inherit;
-    }
-  }
-
-  .lang-wrap {
-    margin: 0 1.5em;
-    font-size: 0.875em;
-
-    .navi {
-      opacity: 0.5;
-
-      &.active {
-        opacity: 0.85;
-      }
-    }
-
-    span {
-      opacity: 0.5;
-    }
-  }
-
-  .bt-navi {
-    position: relative;
-    cursor: pointer;
-
-    .navi-sub {
-      position: absolute;
-      width: 100%;
-      background-color: #863b61;
-      left: 0;
-      top: 3em;
-      display: none;
-
-      .sub {
-        width: 100%;
-        display: block;
-        padding: 1em;
-        color: #f9f9f9;
-
-        &:hover {
-          background-color: #a34a77;
-        }
+        opacity: 0.7;
       }
     }
   }
