@@ -1,21 +1,19 @@
-/************* dotenv init *************/
-require("./modules/dotenv-init")();
-
 /************* global require *************/
+require("./modules/dotenv-init")();
 const express = require("express");
 const app = express();
 const path = require("path");
 const helmet = require("helmet");
-// const passport = require("passport");
-// const passportModule = require("./passport");
+// const passport = require('passport');
+// const passportModule = require('./passport');
 const method = require("./middlewares/method-mw");
 const logger = require("./middlewares/morgan-mw");
-// const session = require("./middlewares/session-mw");
+const session = require("./middlewares/session-mw");
 const locals = require("./middlewares/locals-mw");
 const { sequelize } = require("./models");
 
 /*************** sequelize init **************/
-// require("./modules/sequelize-init")(sequelize);
+require("./modules/sequelize-init")(sequelize);
 
 /*************** server init **************/
 require("./modules/server-init")(app, process.env.PORT);
@@ -36,7 +34,7 @@ app.locals.pretty = true;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(method());
-// app.use(session(app));
+app.use(session(app));
 
 /**************** passport ****************/
 // passportModule(passport);
