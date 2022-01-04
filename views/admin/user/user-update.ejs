@@ -1,0 +1,63 @@
+<%- include('../../inc/head.ejs') %> 
+<%- include('../../inc/header.ejs') %>
+<section class="user-wrapper list-wrapper wrapper">
+  <form name="updateForm" method="POST">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="id" value="1">
+  <table class="user-tbl table border-bottom">
+    <tbody>
+      <tr>
+        <td class="title">아이디</td>
+        <td class="content"><b>dotm3434</b></td>
+      </tr>
+      <tr>
+        <td class="title">이름</td>
+        <td class="content">
+          <input type="text" name="username"
+          class="form-control" placeholder="이름(필수사항)">
+        </td>
+      </tr>
+      <tr>
+        <td class="title">
+          전화번호
+        </td>
+        <td class="content form-inline">
+          <select name="tel1" class="form-control">
+            <option value="">선택</option>
+            <% for(let v of telNumber) { %>
+              <option value="<%=v%>"><%=v%></option>
+            <% } %>
+          </select> -
+          <input type="text" name="tel2"class="form-control"> -
+          <input type="text" name="tel3"class="form-control">
+        </td>
+      </tr>
+      <tr>
+        <td class="title">이메일</td>
+        <td class="content">
+          <input type="text" name="email" class="form-control">
+        </td>
+      </tr>
+      <tr>
+        <td class="title" rowspan="2">주소</td>
+        <td class="content form-inline">
+          <input type="text" name="addrPost" class="form-control" readonly>
+          <button class="btn btn-primary">우편번호찾기</button>
+        </td>
+        </tr>
+        <tr>
+        <td>
+          <hr>
+          <input type="text" name="addrLegacy" class="form-control" readonly>
+          <input type="text" name="addrLoad" class="form-control" readonly>
+          <input type="text" name="addrDetail" class="form-control">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </form>
+  <div class="btn-wrap">
+
+  </div>
+</section>
+<%-include('../../inc/foot.ejs') %>
