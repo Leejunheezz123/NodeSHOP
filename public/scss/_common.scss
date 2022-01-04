@@ -1,7 +1,7 @@
 @import "./mixins";
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap");
 
-html, body,  h1, h2, h3, h4, h5, h6, p,  div, form, /* input, textarea, */ table, td, th, header, section, aside, footer, article, nav, ul, ol, li {
+html, body, h1, h2, h3, h4, h5, h6, p, div, form, /* input, textarea, */ table, td, th, header, section, aside, footer, article, nav, ul, ol, li {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -51,7 +51,7 @@ a:not(.btn) {
 
 .wrapper {
   width: 96%;
-  max-width: 970px;
+  max-width: 1140px;
   margin: auto;
 }
 
@@ -59,8 +59,8 @@ a:not(.btn) {
   &.circle {
     &:before {
       border-radius: 0.25em;
-      height: 0.5em;
       width: 0.5em;
+      height: 0.5em;
     }
   }
   &:before {
@@ -71,14 +71,20 @@ a:not(.btn) {
     background-color: $success-color;
     margin-right: 0.5em;
   }
+  &.secondary {
+    &:before {
+      background-color: $secondary-color;
+    }
+  }
 }
 
+// header-wrapper
 .header-wrapper {
   .header-top {
-    border-bottom: 1px solid $secondary-color;
     background-color: #fafafa;
     border-top: 3px solid #575755;
-    @include flex($h: sapce-between, $v: flex-start);
+    border-bottom: 1px solid $secondary-color;
+    @include flex($h: space-between, $v: flex-start);
     h1.logo {
       font-size: inherit;
       line-height: 1;
@@ -117,17 +123,17 @@ section.wrapper {
 }
 
 .nav-tabs {
-  .nav-iem.show {
+  .nav-item.show {
     .nav-link {
+      color: $primary-color;
       border-color: #dee2e6 #dee2e6 #fff;
-      color: $accent-color;
     }
   }
   .nav-link {
     color: $secondary-color;
     &.active {
+      color: $primary-color;
       border-color: #dee2e6 #dee2e6 #fff;
-      color: $info-color;
     }
   }
 }
