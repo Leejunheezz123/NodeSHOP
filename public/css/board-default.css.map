@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../scss/board/board-default.scss",
+        "../scss/_variables.scss",
+        "../scss/_mixins.scss",
+        "../scss/_variables.scss"
+    ],
+    "names": [],
+    "file": "board-default.css"
+}
