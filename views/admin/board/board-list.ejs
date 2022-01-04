@@ -10,8 +10,11 @@
     </select>
   </div>
   <div class="tbl-wrap">
-    <%- include('../../board/list-default.ejs') %> 
+    <% if(boardType === 'default') { %>
+    <%- include('../../board/list-default.ejs') %>
+    <% } else { %>
     <%- include('../../board/list-gallery.ejs') %> 
+    <% } %>
   </div>
 </section>
 <%- include('../../inc/foot.ejs') %>
