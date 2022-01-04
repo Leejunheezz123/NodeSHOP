@@ -104,6 +104,30 @@ a:not(.btn) {
     }
   }
   .sub-navi {
-    margin: 1.5em auto 1em auto;
+    margin: 1.5em auto 0 auto;
+  }
+}
+
+section.wrapper {
+  min-height: 70vh;
+  padding: 2em 1.5em 1.5em 1.5em;
+  border-bottom: 1px solid #dee2e6;
+  border-left: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+}
+
+.nav-tabs {
+  .nav-iem.show {
+    .nav-link {
+      border-color: #dee2e6 #dee2e6 #fff;
+      color: $accent-color;
+    }
+  }
+  .nav-link {
+    color: $secondary-color;
+    &.active {
+      border-color: #dee2e6 #dee2e6 #fff;
+      color: $info-color;
+    }
   }
 }
