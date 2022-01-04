@@ -1,4 +1,38 @@
-<%- include('../../inc/head.ejs') %> 
+<%- include('../../inc/head.ejs') %>
 <%- include('../../inc/header.ejs') %>
-<section class="board-wrapper wrapper">게시판 관리</section>
-<%-include('../../inc/foot.ejs') %>
+<section class="board-wrapper init-wrapper wrapper">
+  <form action="/admin/board/init" method="POST">
+    <h4 class="title bullet my-2">게시판 생성</h4>
+    <table class="table create-tbl">
+      <tbody>
+        <tr>
+          <td class="title">게시판 이름</td>
+          <td class="content">
+            <input type="text" name="tblName" class="form-control">
+          </td>
+          <td class="title"></td>
+          <td class="content"></td>
+        </tr>
+        <tr>
+          <td class="title">게시판 형태</td>
+          <td>
+            <input type="text" name="tblType" class="form-control">
+          </td>
+          <td class="title">댓글사용여부</td>
+          <td>
+            <select type="text" name="tblComment" class="form-control">
+              <option value="true">사용</option>
+              <option value="false">사용안함</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" class="text-center">
+            <button class="btn btn-primary">게시판 생성</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</section>
+<%- include('../../inc/foot.ejs') %>

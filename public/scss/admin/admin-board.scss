@@ -1,1 +1,13 @@
 @import "../common";
+.board-wrapper {
+  &.init-wrapper {
+    .create-tbl {
+      .title {
+        width: 15%;
+      }
+      .content {
+        width: 35%;
+      }
+    }
+  }
+}
