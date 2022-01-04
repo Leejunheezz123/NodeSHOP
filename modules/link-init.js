@@ -8,7 +8,12 @@ module.exports = {
       { path: "/admin/order", path2: "/admin/order", src: "b3" },
       { path: "/admin/board/init", path2: "/admin/board", src: "b4" },
       { path: "/admin/system", path2: "/admin/system", src: "b6" },
-      { path: "//anaytics.google.com", path2: "/admin/analytics", src: "b9" },
+      {
+        path: "//analytics.google.com",
+        path2: "/admin/analytics",
+        src: "b9",
+        target: "_blank",
+      },
     ],
     user: [{ path: "", name: "회원 리스트" }],
     board: [

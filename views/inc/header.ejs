@@ -10,7 +10,7 @@
   </div>
   <nav class="navi-wrap">
     <% for(let v of links.main) { %>
-    <a href="<%= v.path %>" class="navi">
+    <a href="<%= v.path %>" class="navi" <%= (v.target ? `target="${v.target}"` : '') %>>
       <% if(secondPath===v.path2) { %>
       <img src="/img/admin/<%= v.src %>_on.jpg" alt="icon" />
       <% } else { %>
