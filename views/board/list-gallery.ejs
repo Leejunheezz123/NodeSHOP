@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="/css/board-gallery.css">
-<article class="board-container gallery-container">
+<article class="board-container gallery-type list-page">
   <ul class="list-wrap">
     <li class="list" data-link="/admin/board/1">
-      <div class="img-wrap" style="background-image: url(/img/f1.jpg);"></div>
+      <div class="img-wrap" style="background-image: url(/img/team1.jpg);"></div>
       <div class="content-wrap">
         <div class="title">우리회사 팀원</div>
       </div>
@@ -10,3 +10,9 @@
   </ul>
   <%- //include('../inc/pager.ejs') %> 
 </article>
+<script>
+  $('.board-container.list-page.gallery-type .list').click(onBoardListClick);
+  function onBoardListCLick() {
+    location.href = $(this).data('link') + '?type=gallery';
+  }
+</script>
