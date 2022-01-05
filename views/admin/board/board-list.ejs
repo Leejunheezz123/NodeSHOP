@@ -3,11 +3,7 @@
 <section class="board-wrapper list-wrapper wrapper">
   <%- include('./inc-select.ejs') %> 
   <div class="tbl-wrap">
-    <% if(boardType === 'default') { %>
-      <%- include('../../board/list-default.ejs') %>
-    <% } else { %> 
-      <%- include('../../board/list-gallery.ejs') %>
-    <% } %>
+    <%- include(`../../board/list-${boardType}.ejs`) %>
   </div>
 </section>
 <%- include('../../inc/foot.ejs') %>
