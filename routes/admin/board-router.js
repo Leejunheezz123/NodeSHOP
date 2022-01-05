@@ -7,9 +7,9 @@ router.get("/", (req, res, next) => {
   const type = req.query.type;
   const boardType = req.query.boardType || "default";
   if (type === "create") {
-    res.render("admin/board/board-form", { css: "admin-board", boardType });
+    res.render("admin/board/board-form", { boardType });
   } else {
-    res.render("admin/board/board-list", { css: "admin-board", boardType });
+    res.render("admin/board/board-list", { boardType });
   }
 });
 
