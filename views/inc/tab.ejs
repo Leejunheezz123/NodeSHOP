@@ -1,10 +1,11 @@
-<% if(currentPaths[1]) { %>
+<% let { current, currents, second, init } = path %>
+<% if(currents[1]) { %>
 <ul class="nav nav-tabs sub-navi wrapper">
-  <% for (let v of links[currentPaths[1]]) { %>
+  <% for (let v of init[currents[1]]) { %>
   <li class="nav-item">
-    <a
-      class="nav-link <%=(currentPath === (secondPath+ (v.path ? '/' + v.path: '')) ? 'active' : '') %>"
-      href="<%=`${secondPath}${(v.path ? '/' + v.path : '')}`%>">
+    <a class="nav-link 
+    <%=(second === v.path2 ? 'active' : '') %>"
+      href="<%=`${second}${(v.path ? '/' + v.path : '')}`%>">
       <%=v.name%>
     </a>
   </li>
