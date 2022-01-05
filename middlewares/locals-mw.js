@@ -1,4 +1,3 @@
-const path = require("path");
 const linkInit = require("../modules/link-init");
 
 module.exports = (req, res, next) => {

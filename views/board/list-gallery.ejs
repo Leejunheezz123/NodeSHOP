@@ -10,9 +10,4 @@
   </ul>
   <%- //include('../inc/pager.ejs') %> 
 </article>
-<script>
-  $('.board-container.list-page.gallery-type .list').click(onBoardListClick);
-  function onBoardListCLick() {
-    location.href = $(this).data('link') + '?type=gallery';
-  }
-</script>
+<script src="/js/board/board.js"></script>

@@ -1,19 +1,12 @@
 <%- include('../../inc/head.ejs') %>
 <%- include('../../inc/header.ejs') %>
 <section class="board-wrapper list-wrapper wrapper">
-  <div class="form-inline mb-2">
-    <select name="tblId" class="form-control">
-      <option value="">선택하세요</option>
-      <option value="1">공지사항</option>
-      <option value="2">사용 후기 갤러리</option>
-      <option value="3">메인페이지 배너</option>
-    </select>
-  </div>
+  <%- include('./inc-select.ejs') %> 
   <div class="tbl-wrap">
     <% if(boardType === 'default') { %>
-    <%- include('../../board/list-default.ejs') %>
-    <% } else { %>
-    <%- include('../../board/list-gallery.ejs') %> 
+      <%- include('../../board/list-default.ejs') %>
+    <% } else { %> 
+      <%- include('../../board/list-gallery.ejs') %>
     <% } %>
   </div>
 </section>
