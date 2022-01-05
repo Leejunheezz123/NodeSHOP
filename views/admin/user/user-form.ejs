@@ -1,7 +1,7 @@
 <%- include('../../inc/head.ejs') %>
 <%- include('../../inc/header.ejs') %>
 <section class="user-wrapper update-wrapper wrapper">
-  <form name="updateForm" method="POST">
+  <form name="userForm" method="POST">
     <% if(type === 'update') { %> 
       <input type="hidden" name="_method" value="PUT">
       <input type="hidden" name="id" value="1">
@@ -57,13 +57,13 @@
           <td class="title" rowspan="2">주소</td>
           <td class="content form-inline">
             <input type="text" name="addrPost" class="form-control mr-2" readonly style="max-width: 120px;">
-            <button class="btn btn-primary">우편번호찾기</button>
+            <a class="btn btn-primary" id="btPostcode">우편번호찾기</a>
           </td>
         </tr>
         <tr>
           <td>
-            <input type="text" name="addrLegacy" class="form-control mb-2" readonly>
-            <input type="text" name="addrLoad" class="form-control mb-2" readonly>
+            <input type="text" name="addrRoad" class="form-control mb-2" readonly>
+            <input type="text" name="addrJibun" class="form-control mb-2" readonly>
             <input type="text" name="addrDetail" class="form-control">
           </td>
         </tr>
@@ -81,4 +81,5 @@
   </div>
 </section>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/<%= currents[1] %>/<%= currents[1] %>.js"></script>
 <%- include('../../inc/foot.ejs') %>
