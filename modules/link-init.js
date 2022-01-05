@@ -9,7 +9,7 @@ module.exports = {
         src: "b1",
       },
       {
-        path: ["/admin/prd", "admin/cate"],
+        path: ["/admin/prd", "/admin/cate"],
         link: "/admin/prd",
         src: "b2",
       },
@@ -23,11 +23,11 @@ module.exports = {
         link: "/admin/binit",
         src: "b4",
       },
-      {
-        path: "/admin/system",
-        link: "/admin/system",
-        src: "b6",
-      },
+      /* {
+        path: '/admin/system',
+        link: '/admin/system',
+        src: 'b6',
+      }, */
       {
         path: "//analytics.google.com",
         link: "/admin/analytics",
