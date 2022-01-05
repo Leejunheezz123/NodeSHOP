@@ -2,6 +2,9 @@
 <%- include('../../inc/header.ejs') %>
 <link rel="stylesheet" href="/css/quill.snow.css">
 <section class="prd-wrapper wrapper">
+  <h4 class="title bullet my-2">
+    상품 <%= (type === 'create' ? '생성' : '수정') %> 
+  </h4>
   <form action="/admin/prd" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="1">
     <input type="hidden" name="_method" value="PUT">
@@ -33,7 +36,7 @@
         </tr>
         <tr>
           <td colspan="2">
-            <textarea name="content" class="form-control" placeholder="내용을 입력하세요." style="min-height: 200px;"></textarea>
+            <div id="editor" style="min-height: 200px;"></div>
           </td>
         </tr>
         <tr>
@@ -54,5 +57,5 @@
   </form>
 </section>
 <script src="/js/quill.min.js"></script>
-<script src="/js/<%= currents[1] %>.js"></script>
+<script src="/js/<%= currents[1] %>/<%= currents[1] %>.js"></script>
 <%- include('../../inc/foot.ejs') %>
