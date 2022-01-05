@@ -1,5 +1,8 @@
 <%- include('../../inc/head.ejs') %>
 <%- include('../../inc/header.ejs') %>
+<script src="/js/promise.polyfill.min.js"></script> 
+<script src="/js/axios.min.js"></script> 
+<script src="/js/validator.min.js"></script> 
 <section class="user-wrapper update-wrapper wrapper">
   <form name="userForm" method="POST">
     <% if(type === 'update') { %> 
@@ -56,15 +59,18 @@
         <tr>
           <td class="title" rowspan="2">주소</td>
           <td class="content form-inline">
-            <input type="text" name="addrPost" class="form-control mr-2" readonly style="max-width: 120px;">
+            <input type="text" name="addrPost" class="form-control mr-2" readonly style="max-width: 120px;" placeholder="우편번호">
             <a class="btn btn-primary" id="btPostcode">우편번호찾기</a>
           </td>
         </tr>
         <tr>
           <td>
-            <input type="text" name="addrRoad" class="form-control mb-2" readonly>
-            <input type="text" name="addrJibun" class="form-control mb-2" readonly>
-            <input type="text" name="addrDetail" class="form-control">
+            <div class="d-flex">
+              <input type="text" name="addrRoad" class="form-control mb-2 flex-glow-1 mr-2" readonly placeholder="도로명주소">
+              <input type="text" name="addrComment" class="form-control" readonly style="width: 120px;" placeholder="참고항목">
+            </div>
+            <input type="text" name="addrJibun" class="form-control mb-2" readonly placeholder="지번주소">
+            <input type="text" name="addrDetail" class="form-control" placeholder="상세주소">
           </td>
         </tr>
         <tr>
