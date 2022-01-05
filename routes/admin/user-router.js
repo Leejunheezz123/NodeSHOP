@@ -5,13 +5,24 @@ const { error, telNumber } = require("../../modules/util");
 
 // 회원리스트
 router.get("/", (req, res, next) => {
-  res.render("admin/user/user-list", { css: "admin-user" });
+  const ejs = {
+    telNumber,
+    type: req.query.type || "",
+  };
+  if (ejs.type === "create") {
+    res.render("admin/user/user-form", ejs);
+  } else {
+    res.render("admin/user/user-list", ejs);
+  }
 });
 
 // 회원 수정 화면
 router.get("/:id", (req, res, next) => {
-  // type 분기
-  res.render("admin/user/user-form", { css: "admin-user", telNumber });
+  const ejs = {
+    telNumber,
+    type: req.query.type || "",
+  };
+  res.render("admin/user/user-form", ejs);
 });
 
 // 회원 수정
