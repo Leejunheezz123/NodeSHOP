@@ -5,16 +5,19 @@ const createError = require("http-errors");
 const bcrypt = require("bcrypt");
 const { error, telNumber, alert } = require("../../modules/util");
 const { User } = require("../../models");
+const pager = require("../../middlewares/pager-mw");
 
 // 회원리스트
-router.get("/", async (req, res, next) => {
+router.get("/", pager(User), async (req, res, next) => {
   if (req.query.type === "create") next();
   else {
     const ejs = { telNumber };
     const users = await User.findAll({
       order: [["id", "desc"]],
+      offset: req.pager.startIdx,
+      limit: req.pager.listCnt,
     });
-    res.json(users);
+    res.json({ pager: req.pager, users });
     // res.render('admin/user/user-list', ejs);
   }
 });
