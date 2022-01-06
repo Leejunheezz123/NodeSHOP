@@ -21,9 +21,10 @@ module.exports = (sequelize, DataType) => {
       },
       userpw: {
         type: DataType.CHAR(60),
-        async set(value) {
+        allowNull: false,
+        set(value) {
           const { BCRYPT_SALT: salt, BCRYPT_ROUND: rnd } = process.env;
-          const hash = await bcrypt.hash(value + salt, Number(rnd));
+          const hash = bcrypt.hashSync(value + salt, Number(rnd));
           this.setDataValue("userpw", hash);
         },
       },
