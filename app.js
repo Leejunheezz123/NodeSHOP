@@ -35,6 +35,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(method());
 app.use(session(app));
+app.use((req, res, next) => {
+  res.removeHeader("Cross-Origin-Resource-Policy");
+  res.removeHeader("Cross-Origin-Embedder-Policy");
+  next();
+});
 
 /**************** passport ****************/
 // passportModule(passport);

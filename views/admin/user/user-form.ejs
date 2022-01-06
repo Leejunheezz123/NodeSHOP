@@ -12,27 +12,42 @@
     <table class="user-tbl table">
       <tbody>
         <tr>
-          <td class="title">아이디</td>
+          <td class="title require">아이디</td>
           <td class="content">
-            <b>booldook</b>
+            <% if(type === 'create') { %>
+              <input type="text" name="userid" class="form-control" placeholder="아이디" style="width: 200px;">
+              <div class="valid userid"></div>
+            <% } else { %> 
+              <b>booldook</b>
+            <% } %> 
           </td>
         </tr>
         <tr>
-          <td class="title">이름</td>
+          <td class="title require">이름</td>
           <td class="content">
             <input type="text" name="username" class="form-control" placeholder="이름(필수사항)" style="max-width: 200px;">
+            <div class="valid username"></div>
           </td>
         </tr>
         <tr>
-          <td class="title">패스워드</td>
+          <td class="title require">패스워드</td>
           <td class="content">
             <input type="password" name="userpw" class="form-control" placeholder="비밀번호" style="max-width: 200px;">
+            <div class="valid userpw"></div>
           </td>
         </tr>
         <tr>
-          <td class="title">패스워드 확인</td>
+          <td class="title require">패스워드 확인</td>
           <td class="content">
             <input type="password" name="userpw_re" class="form-control" placeholder="비밀번호확인" style="max-width: 200px;">
+            <div class="valid userpw_re"></div>
+          </td>
+        </tr>
+        <tr>
+          <td class="title require">이메일</td>
+          <td class="content">
+            <input type="text" name="email" class="form-control">
+            <div class="valid email"></div>
           </td>
         </tr>
         <tr>
@@ -48,12 +63,6 @@
             <input type="text" name="tel2" class="form-control" style="max-width: 80px;">
             <span class="px-2">-</span>
             <input type="text" name="tel3" class="form-control" style="max-width: 80px;">
-          </td>
-        </tr>
-        <tr>
-          <td class="title">이메일</td>
-          <td class="content">
-            <input type="text" name="email" class="form-control">
           </td>
         </tr>
         <tr>
@@ -86,6 +95,6 @@
 
   </div>
 </section>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="/js/<%= currents[1] %>/<%= currents[1] %>.js"></script>
 <%- include('../../inc/foot.ejs') %>
