@@ -1,10 +1,12 @@
+s (102 sloc)  4.24 KB
+   
 <%- include('../../inc/head.ejs') %>
 <%- include('../../inc/header.ejs') %>
 <script src="/js/promise.polyfill.min.js"></script> 
 <script src="/js/axios.min.js"></script> 
 <script src="/js/validator.min.js"></script> 
 <section class="user-wrapper update-wrapper wrapper">
-  <form name="userForm" method="POST">
+  <form name="userForm" method="POST" action="/admin/user">
     <% if(type === 'update') { %> 
       <input type="hidden" name="_method" value="PUT">
       <input type="hidden" name="id" value="1">
@@ -60,9 +62,9 @@
               <% } %>
             </select>
             <span class="px-2">-</span>
-            <input type="text" name="tel2" class="form-control" style="max-width: 80px;">
+            <input type="text" name="tel2" class="form-control" style="max-width: 80px;" min="3" maxlength="4">
             <span class="px-2">-</span>
-            <input type="text" name="tel3" class="form-control" style="max-width: 80px;">
+            <input type="text" name="tel3" class="form-control" style="max-width: 80px;" min="4" maxlength="4">
           </td>
         </tr>
         <tr>
@@ -84,7 +86,9 @@
         </tr>
         <tr>
           <td colspan="2" class="text-center">
-            <button class="btn btn-success">수정</button>
+            <button class="btn btn-success">
+              <%= (type === 'create' ? '가입' : '수정') %>
+            </button>
             <a href="/admin/user" class="btn btn-secondary">리스트</a>
           </td>
         </tr>
@@ -95,6 +99,7 @@
 
   </div>
 </section>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/user/validation.js"></script>
 <script src="/js/<%= currents[1] %>/<%= currents[1] %>.js"></script>
 <%- include('../../inc/foot.ejs') %>
