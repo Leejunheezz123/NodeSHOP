@@ -7,16 +7,25 @@ const { error, telNumber, alert } = require("../../modules/util");
 const { User } = require("../../models");
 
 // 회원리스트
+router.get("/", async (req, res, next) => {
+  if (req.query.type === "create") next();
+  else {
+    const ejs = { telNumber };
+    const users = await User.findAll({
+      order: [["id", "desc"]],
+    });
+    res.json(users);
+    // res.render('admin/user/user-list', ejs);
+  }
+});
+
+// 회원 등록 화면
 router.get("/", (req, res, next) => {
   const ejs = {
     telNumber,
     type: req.query.type || "",
   };
-  if (ejs.type === "create") {
-    res.render("admin/user/user-form", ejs);
-  } else {
-    res.render("admin/user/user-list", ejs);
-  }
+  res.render("admin/user/user-form", ejs);
 });
 
 // 회원 수정 화면
