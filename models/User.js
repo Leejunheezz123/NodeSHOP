@@ -69,6 +69,24 @@ module.exports = (sequelize, DataType) => {
       addrDetail: {
         type: DataType.STRING(255),
       },
+      tel1: {
+        type: DataType.STRING(4),
+        validate: {
+          len: [2, 4],
+        },
+      },
+      tel2: {
+        type: DataType.STRING(4),
+        validate: {
+          len: [3, 4],
+        },
+      },
+      tel3: {
+        type: DataType.STRING(4),
+        validate: {
+          len: 4,
+        },
+      },
     },
     {
       charset: "utf8",

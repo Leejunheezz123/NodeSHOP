@@ -3,6 +3,7 @@ const fs = require("fs-extra");
 const Sequelize = require("sequelize");
 const env = process.env.NODE_ENV || "development";
 const config = require("../config/config")[env];
+config.timezone = "+09:00";
 const db = {};
 
 const sequelize = new Sequelize(
