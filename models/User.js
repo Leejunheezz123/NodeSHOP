@@ -66,5 +66,10 @@ module.exports = (sequelize, DataType) => {
       paranoid: true,
     }
   );
+
+  User.associate = (models) => {
+    User.hasMany(models.Board);
+  };
+
   return User;
 };

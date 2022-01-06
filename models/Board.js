@@ -17,11 +17,6 @@ module.exports = (sequelize, DataType) => {
       },
       status: {
         type: DataType.ENUM,
-        /* 
-        0: 삭제
-        1: 유휴
-        2: 활성
-        */
         values: ["0", "1", "2"],
         allowNull: false,
         default: "2",
@@ -34,5 +29,10 @@ module.exports = (sequelize, DataType) => {
       paranoid: true,
     }
   );
+
+  Board.associate = (models) => {
+    Board.belongsTo(models.User);
+  };
+
   return Board;
 };
