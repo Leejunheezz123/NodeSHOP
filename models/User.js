@@ -43,6 +43,21 @@ module.exports = (sequelize, DataType) => {
         allowNull: false,
         default: "2",
       },
+      addrPost: {
+        type: DataType.CHAR(5),
+      },
+      addrRoad: {
+        type: DataType.STRING(255),
+      },
+      addrJibun: {
+        type: DataType.STRING(255),
+      },
+      addrComment: {
+        type: DataType.STRING(255),
+      },
+      addrDetail: {
+        type: DataType.STRING(255),
+      },
     },
     {
       charset: "utf8",
