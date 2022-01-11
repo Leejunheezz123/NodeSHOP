@@ -99,15 +99,6 @@ module.exports = (sequelize, { DataTypes, Op }) => {
   User.searchUser = async function (query, pager) {
     let { field = "id", search = "", sort = "desc" } = query;
     let where = search ? { [field]: { [Op.like]: "%" + search + "%" } } : null;
-    if (field === "tel" && search !== "") {
-      where = {
-        [Op.or]: {
-          tel1: { [Op.like]: "%" + search + "%" },
-          tel2: { [Op.like]: "%" + search + "%" },
-          tel3: { [Op.like]: "%" + search + "%" },
-        },
-      };
-    }
     if (field === "addrRoad" && search !== "") {
       where = {
         [Op.or]: {
