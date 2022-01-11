@@ -40,6 +40,26 @@ const generateUser = (_users) => {
   });
   return users;
 };
+const generateWhere = (sequelize, Op, { field, search }) => {
+  let where = search ? { [field]: { [Op.like]: "%" + search + "%" } } : null;
+  if (field === "tel" && search !== "") {
+    where = sequelize.where(sequelize.fn("replace", sequelize.col("tel"), "-", ""), {
+      [Op.like]: "%" + search.replace(/-/g, "") + "%",
+    });
+  }
+  if (field === "addrRoad" && search !== "") {
+    where = {
+      [Op.or]: {
+        addrPost: { [Op.like]: "%" + search + "%" },
+        addrRoad: { [Op.like]: "%" + search + "%" },
+        addrJibun: { [Op.like]: "%" + search + "%" },
+        addrComment: { [Op.like]: "%" + search + "%" },
+        addrDetail: { [Op.like]: "%" + search + "%" },
+      },
+    };
+  }
+  return where;
+};
 
 module.exports = (sequelize, { DataTypes, Op }) => {
   const User = sequelize.define(
@@ -147,34 +167,22 @@ module.exports = (sequelize, { DataTypes, Op }) => {
     user.tel = getSeparateString([user.tel1, user.tel2, user.tel3], "-");
   });
 
+  User.getCount = async function (query) {
+    return await this.count({
+      where: generateWhere(sequelize, Op, query),
+    });
+  };
+
   User.searchUser = async function (query, pager) {
-    let { field = "id", search = "", sort = "desc" } = query;
-    let where = search ? { [field]: { [Op.like]: "%" + search + "%" } } : null;
-    if (field === "tel" && search !== "") {
-      where = sequelize.where(sequelize.fn("replace", sequelize.col("tel"), "-", ""), {
-        [Op.like]: "%" + search.replace(/-/g, "") + "%",
-      });
-    }
-    if (field === "addrRoad" && search !== "") {
-      where = {
-        [Op.or]: {
-          addrPost: { [Op.like]: "%" + search + "%" },
-          addrRoad: { [Op.like]: "%" + search + "%" },
-          addrJibun: { [Op.like]: "%" + search + "%" },
-          addrComment: { [Op.like]: "%" + search + "%" },
-          addrDetail: { [Op.like]: "%" + search + "%" },
-        },
-      };
-    }
+    let { field = "id", sort = "desc" } = query;
     const rs = await this.findAll({
       order: [[field || "id", sort || "desc"]],
       offset: pager.startIdx,
       limit: pager.listCnt,
-      where,
+      where: generateWhere(sequelize, Op, query),
     });
     const users = generateUser(rs);
     return users;
   };
-
   return User;
 };
