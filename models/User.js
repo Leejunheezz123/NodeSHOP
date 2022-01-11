@@ -1,5 +1,45 @@
 const bcrypt = require("bcrypt");
-const { generateUser } = require("../modules/util");
+const { getSeparateString } = require("../modules/util");
+const generateUser = (_users) => {
+  const users = _users.map((v) => {
+    v.addr1 =
+      v.addrPost && v.addrRoad
+        ? `[${v.addrPost}] 
+        ${v.addrRoad || ""} 
+        ${v.addrComment || ""}
+        ${v.addrDetail || ""}`
+        : "";
+    v.addr2 =
+      v.addrPost && v.addrJibun
+        ? `[${v.addrPost}] 
+        ${v.addrJibun}
+        ${v.addrDetail || ""}`
+        : "";
+    v.level = "";
+    switch (v.status) {
+      case "0":
+        v.level = "탈퇴회원";
+        break;
+      case "1":
+        v.level = "유휴회원";
+        break;
+      case "2":
+        v.level = "일반회원";
+        break;
+      case "8":
+        v.level = "관리자";
+        break;
+      case "9":
+        v.level = "최고관리자";
+        break;
+      default:
+        v.level = "회원";
+        break;
+    }
+    return v;
+  });
+  return users;
+};
 
 module.exports = (sequelize, { DataTypes, Op }) => {
   const User = sequelize.define(
@@ -73,9 +113,15 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       },
       tel: {
         type: DataTypes.STRING(14),
-        validate: {
-          len: [11, 14],
-        },
+      },
+      tel1: {
+        type: DataTypes.VIRTUAL,
+      },
+      tel2: {
+        type: DataTypes.VIRTUAL,
+      },
+      tel3: {
+        type: DataTypes.VIRTUAL,
       },
     },
     {
@@ -94,11 +140,21 @@ module.exports = (sequelize, { DataTypes, Op }) => {
     const { BCRYPT_SALT: salt, BCRYPT_ROUND: rnd } = process.env;
     const hash = await bcrypt.hash(user.userpw + salt, Number(rnd));
     user.userpw = hash;
+    user.tel = getSeparateString([user.tel1, user.tel2, user.tel3], "-");
+  });
+
+  User.beforeUpdate(async (user) => {
+    user.tel = getSeparateString([user.tel1, user.tel2, user.tel3], "-");
   });
 
   User.searchUser = async function (query, pager) {
     let { field = "id", search = "", sort = "desc" } = query;
     let where = search ? { [field]: { [Op.like]: "%" + search + "%" } } : null;
+    if (field === "tel" && search !== "") {
+      where = sequelize.where(sequelize.fn("replace", sequelize.col("tel"), "-", ""), {
+        [Op.like]: "%" + search.replace(/-/g, "") + "%",
+      });
+    }
     if (field === "addrRoad" && search !== "") {
       where = {
         [Op.or]: {
