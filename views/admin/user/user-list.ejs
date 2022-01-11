@@ -1,8 +1,9 @@
 <%- include('../../inc/head.ejs') %>
 <%- include('../../inc/header.ejs') %>
 <section class="user-wrapper list-wrapper wrapper">
-  <div class="my-2 text-right">
-    <a href="/admin/user?type=create" class="btn btn-primary">회원등록</a>
+  <div class="my-2 d-flex justify-content-between">
+    <%- include('../../inc/search.ejs') %> 
+    <a href="/<%= currents[0] %>/<%= currents[1] %>?type=create" class="btn btn-primary">회원등록</a>
   </div>
   <table class="user-tbl table table-sm text-center border-bottom">
     <thead>
@@ -21,15 +22,15 @@
       <tr>
         <td rowspan="2"><%= v.id %></td>
         <td>
-          <a href="/admin/user/<%= v.id %>"><%= v.userid %></a>
+          <a href="/<%= currents[0] %>/<%= currents[1] %>/<%= v.id %>"><%= v.userid %></a>
         </td>
         <td><%= v.username %></td>
         <td><%= v.email %></td>
         <td><%= v.tel %></td>
         <td><%= v.level %></td>
         <td rowspan="2">
-          <a href="/admin/user/<%= v.id %>" class="btn btn-success">수정</a>
-          <form action="/admin/user" method="POST" class="d-inline-block">
+          <a href="/<%= currents[0] %>/<%= currents[1] %>/<%= v.id %>" class="btn btn-success">수정</a>
+          <form action="/<%= currents[0] %>/<%= currents[1] %>" method="POST" class="d-inline-block">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="id" value="<%= v.id %>">
             <button class="btn btn-danger">삭제</button>
