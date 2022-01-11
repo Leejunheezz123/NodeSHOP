@@ -4,7 +4,8 @@ const router = express.Router();
 const { error } = require("../../modules/util");
 
 router.get("/", (req, res, next) => {
-  res.render("admin/board/board-init", {});
+  const ejs = {};
+  res.render("admin/binit/board-init", ejs);
 });
 
 router.put("/", (req, res, next) => {
