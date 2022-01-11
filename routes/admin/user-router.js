@@ -2,7 +2,13 @@ const path = require("path");
 const express = require("express");
 const router = express.Router();
 const createError = require("http-errors");
-const { error, telNumber, alert, getStringTel } = require("../../modules/util");
+const {
+  error,
+  telNumber,
+  alert,
+  getStringTel,
+  getArrayTel,
+} = require("../../modules/util");
 const { User, Sequelize } = require("../../models");
 const { Op } = Sequelize;
 const pager = require("../../middlewares/pager-mw");
@@ -31,12 +37,15 @@ router.get("/", pager(User), async (req, res, next) => {
 });
 
 // 회원 수정 화면
-router.get("/:id", (req, res, next) => {
-  const ejs = {
-    telNumber,
-    type: req.query.type || "",
-  };
-  res.render("admin/user/user-form", ejs);
+router.get("/:id", async (req, res, next) => {
+  try {
+    const user = await User.findOne({ where: { id: req.params.id } });
+    user.tel = getArrayTel(user.tel);
+    const ejs = { telNumber, type: "update", user };
+    res.render("admin/user/user-form", ejs);
+  } catch (err) {
+    next(createError(err));
+  }
 });
 
 // 회원 저장

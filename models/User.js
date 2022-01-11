@@ -93,7 +93,6 @@ module.exports = (sequelize, { DataTypes, Op }) => {
     const { BCRYPT_SALT: salt, BCRYPT_ROUND: rnd } = process.env;
     const hash = await bcrypt.hash(user.userpw + salt, Number(rnd));
     user.userpw = hash;
-    console.log(user);
   });
 
   User.searchUser = async function (query, pager) {
