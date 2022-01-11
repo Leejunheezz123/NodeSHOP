@@ -125,6 +125,14 @@ const generateUser = (_users) => {
   return users;
 };
 
+const getStringTel = (t1, t2, t3) => {
+  return t1 && t2 && t3 ? t1 + "-" + t2 + "-" + t3 : "";
+};
+
+const getArrayTel = (tel) => {
+  return tel.includes("-") ? tel.split("-") : [];
+};
+
 module.exports = {
   location,
   cutTail,
@@ -138,4 +146,6 @@ module.exports = {
   alert,
   telNumber,
   generateUser,
+  getArrayTel,
+  getStringTel,
 };

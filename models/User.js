@@ -23,11 +23,11 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       userpw: {
         type: DataTypes.CHAR(60),
         allowNull: false,
-        set(value) {
+        /* set(value) {
           const { BCRYPT_SALT: salt, BCRYPT_ROUND: rnd } = process.env;
           const hash = bcrypt.hashSync(value + salt, Number(rnd));
-          this.setDataValue("userpw", hash);
-        },
+          this.setDataValue('userpw', hash);
+        }, */
       },
       username: {
         type: DataTypes.STRING(255),
@@ -70,22 +70,10 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       addrDetail: {
         type: DataTypes.STRING(255),
       },
-      tel1: {
-        type: DataTypes.STRING(4),
+      tel: {
+        type: DataTypes.STRING(14),
         validate: {
-          len: [2, 4],
-        },
-      },
-      tel2: {
-        type: DataTypes.STRING(4),
-        validate: {
-          len: [3, 4],
-        },
-      },
-      tel3: {
-        type: DataTypes.STRING(4),
-        validate: {
-          len: 4,
+          len: [11, 14],
         },
       },
     },
@@ -101,10 +89,17 @@ module.exports = (sequelize, { DataTypes, Op }) => {
     User.hasMany(models.Board);
   };
 
+  User.beforeCreate(async (user) => {
+    const { BCRYPT_SALT: salt, BCRYPT_ROUND: rnd } = process.env;
+    const hash = await bcrypt.hash(user.userpw + salt, Number(rnd));
+    user.userpw = hash;
+    console.log(user);
+  });
+
   User.searchUser = async function (query, pager) {
     let { field = "id", search = "", sort = "desc" } = query;
     let where = search ? { [field]: { [Op.like]: "%" + search + "%" } } : null;
-    if (field === "tel1" && search !== "") {
+    if (field === "tel" && search !== "") {
       where = {
         [Op.or]: {
           tel1: { [Op.like]: "%" + search + "%" },
