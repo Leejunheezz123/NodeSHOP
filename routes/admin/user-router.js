@@ -22,14 +22,7 @@ router.get("/", (req, res, next) => {
 router.get("/", pager(User), async (req, res, next) => {
   try {
     let { field = "id", search = "", sort = "desc" } = req.query;
-    let where = search ? { [field]: { [Op.like]: "%" + search + "%" } } : null;
-    const rs = await User.findAll({
-      order: [[field || "id", sort || "desc"]],
-      offset: req.pager.startIdx,
-      limit: req.pager.listCnt,
-      where,
-    });
-    const users = generateUser(rs);
+    const users = await User.searchUser(req.query, req.pager);
     const ejs = { telNumber, pager: req.pager, users, field, sort, search };
     res.render("admin/user/user-list", ejs);
   } catch (err) {

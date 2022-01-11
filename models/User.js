@@ -1,17 +1,18 @@
 const bcrypt = require("bcrypt");
+const { generateUser } = require("../modules/util");
 
-module.exports = (sequelize, DataType) => {
+module.exports = (sequelize, { DataTypes, Op }) => {
   const User = sequelize.define(
     "User",
     {
       id: {
-        type: DataType.INTEGER(10).UNSIGNED,
+        type: DataTypes.INTEGER(10).UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
       userid: {
-        type: DataType.STRING(24),
+        type: DataTypes.STRING(24),
         allowNull: false,
         unique: true,
         validate: {
@@ -20,7 +21,7 @@ module.exports = (sequelize, DataType) => {
         },
       },
       userpw: {
-        type: DataType.CHAR(60),
+        type: DataTypes.CHAR(60),
         allowNull: false,
         set(value) {
           const { BCRYPT_SALT: salt, BCRYPT_ROUND: rnd } = process.env;
@@ -29,18 +30,18 @@ module.exports = (sequelize, DataType) => {
         },
       },
       username: {
-        type: DataType.STRING(255),
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
       email: {
-        type: DataType.STRING(255),
+        type: DataTypes.STRING(255),
         allowNull: false,
         validate: {
           isEmail: true,
         },
       },
       status: {
-        type: DataType.ENUM,
+        type: DataTypes.ENUM,
         /* 
         0: 탈퇴
         1: 유휴
@@ -55,34 +56,34 @@ module.exports = (sequelize, DataType) => {
         defaultValue: "2",
       },
       addrPost: {
-        type: DataType.CHAR(5),
+        type: DataTypes.CHAR(5),
       },
       addrRoad: {
-        type: DataType.STRING(255),
+        type: DataTypes.STRING(255),
       },
       addrJibun: {
-        type: DataType.STRING(255),
+        type: DataTypes.STRING(255),
       },
       addrComment: {
-        type: DataType.STRING(255),
+        type: DataTypes.STRING(255),
       },
       addrDetail: {
-        type: DataType.STRING(255),
+        type: DataTypes.STRING(255),
       },
       tel1: {
-        type: DataType.STRING(4),
+        type: DataTypes.STRING(4),
         validate: {
           len: [2, 4],
         },
       },
       tel2: {
-        type: DataType.STRING(4),
+        type: DataTypes.STRING(4),
         validate: {
           len: [3, 4],
         },
       },
       tel3: {
-        type: DataType.STRING(4),
+        type: DataTypes.STRING(4),
         validate: {
           len: 4,
         },
@@ -98,6 +99,39 @@ module.exports = (sequelize, DataType) => {
 
   User.associate = (models) => {
     User.hasMany(models.Board);
+  };
+
+  User.searchUser = async function (query, pager) {
+    let { field = "id", search = "", sort = "desc" } = query;
+    let where = search ? { [field]: { [Op.like]: "%" + search + "%" } } : null;
+    if (field === "tel1" && search !== "") {
+      where = {
+        [Op.or]: {
+          tel1: { [Op.like]: "%" + search + "%" },
+          tel2: { [Op.like]: "%" + search + "%" },
+          tel3: { [Op.like]: "%" + search + "%" },
+        },
+      };
+    }
+    if (field === "addrRoad" && search !== "") {
+      where = {
+        [Op.or]: {
+          addrPost: { [Op.like]: "%" + search + "%" },
+          addrRoad: { [Op.like]: "%" + search + "%" },
+          addrJibun: { [Op.like]: "%" + search + "%" },
+          addrComment: { [Op.like]: "%" + search + "%" },
+          addrDetail: { [Op.like]: "%" + search + "%" },
+        },
+      };
+    }
+    const rs = await this.findAll({
+      order: [[field || "id", sort || "desc"]],
+      offset: pager.startIdx,
+      limit: pager.listCnt,
+      where,
+    });
+    const users = generateUser(rs);
+    return users;
   };
 
   return User;

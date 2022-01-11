@@ -33,11 +33,11 @@
         <option value="email"
         <%= (field === 'email' ? 'selected': '') %>>
         이메일</option>
-        <option value="tel"
-        <%= (field === 'tel' ? 'selected': '') %>>
+        <option value="tel1"
+        <%= (field === 'tel1' ? 'selected': '') %>>
         전화번호</option>
-        <option value="addr"
-        <%= (field === 'addr' ? 'selected': '') %>>
+        <option value="addrRoad"
+        <%= (field === 'addrRoad' ? 'selected': '') %>>
         주소</option>
       <% } %> 
       <% if(currents[1] === 'board') { %> 
@@ -77,7 +77,7 @@
   }
   function onSearchFormReset() {
     $('.search-wrap input[name="search"]').val('');
-    $('.search-wrap select[name="field"]').val('id');
+    $('.search-wrap select[name="field"]').val('');
     $('.search-wrap form')[0].submit();
   }
 </script>
