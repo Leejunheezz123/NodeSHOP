@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const createError = require("http-errors");
 const router = express.Router();
 const { error } = require("../../modules/util");
 const boardInit = require("../../middlewares/boardinit-mw");
@@ -39,14 +40,16 @@ router.post(
   uploader.fields([{ name: "img" }, { name: "pds" }]),
   afterUploader(["img", "pds"]),
   async (req, res, next) => {
-    req.body.user_id = 1; // 회원작업 후 수정 예정
-    // await Board.create(req.body);
-    // await BoardFile.create(req.files);
-    res.json({
-      body: req.body,
-      files: req.files,
-    });
-    // res.send('/admin/board:POST');
+    try {
+      req.body.user_id = 1; // 회원작업 후 수정 예정
+      req.body.binit_id = res.locals.boardId;
+      const board = await Board.create(req.body);
+      req.files.forEach((file) => (file.board_id = board.id));
+      const files = await BoardFile.bulkCreate(req.files);
+      res.redirect("/admin/board?boardId=" + res.locals.boardId);
+    } catch (err) {
+      next(createError(err));
+    }
   }
 );
 
