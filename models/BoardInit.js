@@ -43,5 +43,18 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       paranoid: true,
     }
   );
+
+  BoardInit.associate = (models) => {
+    BoardInit.hasMany(models.Board, {
+      foreignKey: {
+        name: "binit_id",
+        allowNull: false,
+      },
+      sourceKey: "id",
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    });
+  };
+
   return BoardInit;
 };
