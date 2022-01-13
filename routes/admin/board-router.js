@@ -3,6 +3,9 @@ const express = require("express");
 const router = express.Router();
 const { error } = require("../../modules/util");
 const boardInit = require("../../middlewares/boardinit-mw");
+const uploader = require("../../middlewares/multer-mw");
+const afterUploader = require("../../middlewares/after-multer-mw");
+const { Board, BoardFile } = require("../../models");
 
 // 신규글 작성
 router.get("/", boardInit, (req, res, next) => {
@@ -18,6 +21,7 @@ router.get("/", boardInit, (req, res, next) => {
   res.render("admin/board/board-list", { type });
 });
 
+// 상세보기
 router.get("/:id", (req, res, next) => {
   const type = req.query.type;
   const boardType = req.query.boardType || "default";
@@ -28,9 +32,23 @@ router.get("/:id", (req, res, next) => {
   }
 });
 
-router.post("/", (req, res, next) => {
-  res.send("/admin/board:POST");
-});
+// 게시물 저장
+router.post(
+  "/",
+  boardInit,
+  uploader.fields([{ name: "img" }, { name: "pds" }]),
+  afterUploader(["img", "pds"]),
+  async (req, res, next) => {
+    req.body.user_id = 1; // 회원작업 후 수정 예정
+    // await Board.create(req.body);
+    // await BoardFile.create(req.files);
+    res.json({
+      body: req.body,
+      files: req.files,
+    });
+    // res.send('/admin/board:POST');
+  }
+);
 
 router.put("/", (req, res, next) => {
   res.send("/admin/board:PUT");

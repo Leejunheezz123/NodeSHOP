@@ -1,6 +1,7 @@
 .env.dev
 .env.pro
-
+storages
+*.css
 
 # Logs
 
