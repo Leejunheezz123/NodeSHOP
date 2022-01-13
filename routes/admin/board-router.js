@@ -2,7 +2,7 @@ const path = require("path");
 const express = require("express");
 const createError = require("http-errors");
 const router = express.Router();
-const { error } = require("../../modules/util");
+const { relPath, dateFormat } = require("../../modules/util");
 const boardInit = require("../../middlewares/boardinit-mw");
 const uploader = require("../../middlewares/multer-mw");
 const afterUploader = require("../../middlewares/after-multer-mw");
@@ -17,9 +17,25 @@ router.get("/", boardInit("query"), (req, res, next) => {
 });
 
 // 리스트
-router.get("/", boardInit("query"), (req, res, next) => {
-  const { type } = req.query;
-  res.render("admin/board/board-list", { type });
+router.get("/", boardInit("query"), async (req, res, next) => {
+  try {
+    const { type } = req.query;
+    const { boardId, boardType } = res.locals;
+    const _lists = await Board.findAll({
+      where: { binit_id: boardId },
+      include:
+        boardType === "gallery" ? [{ model: BoardFile, attributes: ["saveName"] }] : [],
+    });
+    /* const lists = _lists.map((v) => {
+      v.updatedAt = dateFormat(v.updatedAt);
+      if (v.BoardFiles) v.thumbSrc = relPath(v.BoardFiles[0].saveName);
+      return v;
+    }); */
+    res.json(_lists);
+    // res.render('admin/board/board-list', { type, lists });
+  } catch (err) {
+    next(createError(err));
+  }
 });
 
 // 상세보기
