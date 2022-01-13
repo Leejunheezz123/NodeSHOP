@@ -8,12 +8,12 @@
         <tr>
           <td class="title bullet secondary circle">게시판 이름</td>
           <td class="content">
-            <input type="text" name="title" class="form-control">
+            <input type="text" name="title" class="form-control" autofocus>
           </td>
           <td class="title bullet secondary circle">게시판 형태</td>
           <td>
             <select type="text" name="boardType" class="form-control">
-              <option value="D">일반게시판</option>
+              <option value="D" selected>일반게시판</option>
               <option value="G">갤러리게시판</option>
             </select>
           </td>
@@ -25,7 +25,7 @@
               <label class="mr-4">
                 <span class="bullet circle">첨부이미지:</span>
                 <select type="text" name="useImg" class="form-control ml-2">
-                  <option value="0">사용안함</option>
+                  <option value="0" selected>사용안함</option>
                   <% for(let i=1; i<=10; i++) { %>
                   <option value="<%= i %>"><%= i %>개</option>
                   <% } %>
@@ -34,7 +34,7 @@
               <label class="mr-4">
                 <span class="bullet circle">첨부파일:</span>
                 <select type="text" name="useFile" class="form-control ml-2">
-                  <option value="0">사용안함</option>
+                  <option value="0" selected>사용안함</option>
                   <% for(let i=1; i<=2; i++) { %>
                   <option value="<%= i %>"><%= i %>개</option>
                   <% } %>
@@ -44,7 +44,7 @@
                 <span class="bullet circle">댓글사용:</span>
                 <select type="text" name="useComment" class="form-control ml-2">
                   <option value="true">사용</option>
-                  <option value="false">사용안함</option>
+                  <option value="false" selected>사용안함</option>
                 </select>
               </label>
             </div>
@@ -63,7 +63,7 @@
     <thead>
       <tr>
         <th>게시판 이름</th>
-        <th>타입</th>
+        <th>타입</th> 
         <th>이미지첨부</th>
         <th>파일첨부</th>
         <th>댓글사용</th>
@@ -71,47 +71,55 @@
       </tr>
     </thead>
     <tbody>
-      <form method="POST" action="/<%= currents[0] %>/<%= currents[1] %>" class="binit-update-form">
-        <tr>
-          <td>
-            <input type="hidden" name="_method" value="PUT">
-            <input type="hidden" name="id" value="1">
-            <input type="text" name="title" class="form-control">
-          </td>
-          <td>
-            <select type="text" name="boardType" class="form-control">
-              <option value="D">일반게시판</option>
-              <option value="G">갤러리게시판</option>
-            </select>
-          </td>
-          <td>
-            <select type="text" name="useImg" class="form-control ml-2">
-              <option value="0">사용안함</option>
-              <% for(let i=1; i<=10; i++) { %>
-              <option value="<%= i %>"><%= i %>개</option>
-              <% } %>
-            </select>
-          </td>
-          <td>
-            <select type="text" name="useFile" class="form-control ml-2">
-              <option value="0">사용안함</option>
-              <% for(let i=1; i<=2; i++) { %>
-              <option value="<%= i %>"><%= i %>개</option>
-              <% } %>
-            </select>
-          </td>
-          <td>
-            <select type="text" name="useComment" class="form-control">
-              <option value="true">사용</option>
-              <option value="false">사용안함</option>
-            </select>
-          </td>
-          <td>
-            <button type="button" class="btn btn-success" onclick="onChangeBoard('put', this);">수정</button>
-            <button type="button" class="btn btn-danger"onclick="onChangeBoard('delete', this);">삭제</button>
-          </td>
-        </tr>
-      </form>
+      <% for(let v of boards) { %> 
+        <form method="POST" action="/<%= currents[0] %>/<%= currents[1] %>" class="binit-update-form">
+          <tr>
+            <td>
+              <input type="hidden" name="_method" value="PUT">
+              <input type="hidden" name="id" value="<%= v.id %>">
+              <input type="text" name="title" class="form-control" value="<%= v.title %>">
+            </td>
+            <td>
+              <select type="text" name="boardType" class="form-control">
+                <option value="D" 
+                <%= (v.boardType === 'D' ? 'selected': '') %>>일반게시판</option>
+                <option value="G" 
+                <%= (v.boardType === 'G' ? 'selected': '') %>>갤러리게시판</option>
+              </select>
+            </td>
+            <td>
+              <select type="text" name="useImg" class="form-control ml-2">
+                <option value="0">사용안함</option>
+                <% for(let i=1; i<=10; i++) { %>
+                <option value="<%= i %>" 
+                <%= (v.useImg == i ? 'selected': '') %>><%= i %>개</option>
+                <% } %>
+              </select>
+            </td>
+            <td>
+              <select type="text" name="useFile" class="form-control ml-2">
+                <option value="0">사용안함</option>
+                <% for(let i=1; i<=2; i++) { %>
+                <option value="<%= i %>" 
+                <%= (v.useFile == i ? 'selected': '') %>><%= i %>개</option>
+                <% } %>
+              </select>
+            </td>
+            <td>
+              <select type="text" name="useComment" class="form-control">
+                <option value="true" 
+                <%= (v.useComment ? 'selected': '') %>>사용</option>
+                <option value="false" 
+                <%= (v.useComment ? '': 'selected') %>>사용안함</option>
+              </select>
+            </td>
+            <td>
+              <button type="button" class="btn btn-success" onclick="onChangeBoard('put', this);">수정</button>
+              <button type="button" class="btn btn-danger"onclick="onChangeBoard('delete', this);">삭제</button>
+            </td>
+          </tr>
+        </form>
+      <% } %> 
     </tbody>
   </table>
 </section>
