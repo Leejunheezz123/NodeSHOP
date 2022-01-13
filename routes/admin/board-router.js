@@ -2,10 +2,10 @@ const path = require("path");
 const express = require("express");
 const router = express.Router();
 const { error } = require("../../modules/util");
-const boardinit = require("../../middlewares/boardinit-mw");
+const boardInit = require("../../middlewares/boardinit-mw");
 
 // 신규글 작성
-router.get("/", boardinit, (req, res, next) => {
+router.get("/", boardInit, (req, res, next) => {
   const { type } = req.query;
   if (type === "create") {
     res.render("admin/board/board-form", { type, binit: req.binit });
@@ -13,9 +13,9 @@ router.get("/", boardinit, (req, res, next) => {
 });
 
 // 리스트
-router.get("/", (req, res, next) => {
-  const { type, boardType } = req.query;
-  res.render("admin/board/board-list", { type, boardType });
+router.get("/", boardInit, (req, res, next) => {
+  const { type } = req.query;
+  res.render("admin/board/board-list", { type });
 });
 
 router.get("/:id", (req, res, next) => {
