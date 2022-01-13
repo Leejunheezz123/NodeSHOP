@@ -71,9 +71,11 @@
       </tr>
     </thead>
     <tbody>
-      <form method="PUT" action="/<%= currents[0] %>/<%= currents[1] %>/1" class="binit-update-form">
+      <form method="POST" action="/<%= currents[0] %>/<%= currents[1] %>" class="binit-update-form">
         <tr>
           <td>
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="id" value="1">
             <input type="text" name="title" class="form-control">
           </td>
           <td>
@@ -105,8 +107,8 @@
             </select>
           </td>
           <td>
-            <button class="btn btn-success btBoardUpdate">수정</button>
-            <button class="btn btn-danger btBoardRemove">삭제</button>
+            <button type="button" class="btn btn-success" onclick="onChangeBoard('put', this);">수정</button>
+            <button type="button" class="btn btn-danger"onclick="onChangeBoard('delete', this);">삭제</button>
           </td>
         </tr>
       </form>
