@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/css/board-default.css">
 <article class="board-container default-type view-page">
-  <form action="/<%= currents[0] %>/board" method="post" enctype="multipart/form-data">
+  <form action="/<%= currents[0] %>/<%= currents[1] %>" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="1">
     <input type="hidden" name="_method" value="PUT">
     <table class="table border-bottom">
