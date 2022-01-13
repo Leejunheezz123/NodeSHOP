@@ -22,6 +22,5 @@ module.exports = async (req, res, next) => {
   res.locals.useImg = myBoard.useImg;
   res.locals.useFile = myBoard.useFile;
   res.locals.useComment = myBoard.useComment;
-  console.log(res.locals.boardType);
   next();
 };

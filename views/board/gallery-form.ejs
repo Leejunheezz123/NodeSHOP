@@ -22,22 +22,26 @@
             <textarea name="content" class="form-control" placeholder="내용을 입력하세요." style="min-height: 200px;"></textarea>
           </td>
         </tr>
+        <% if(useImg) { %>
         <tr>
           <td>이미지 첨부</td>
           <td>
-            <% for(let i=1; i<=10; i++) { %> 
+            <% for(let i=0; i<useImg; i++) { %> 
               <input type="file" name="img" class="form-control-file mb-2">
             <% } %>
           </td>
         </tr>
+        <% } %>
+        <% if(useFile) { %>
         <tr>
           <td>파일 첨부</td>
           <td>
-            <% for(let i=1; i<=10; i++) { %> 
+            <% for(let i=0; i<useFile; i++) { %> 
               <input type="file" name="pds" class="form-control-file mb-2">
             <% } %>
           </td>
         </tr>
+        <% } %>
       </tbody>
     </table>
     <div class="text-center my-4">
