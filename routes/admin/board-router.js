@@ -19,7 +19,11 @@ router.get("/", boardInit("query"), (req, res, next) => {
 // 리스트
 router.get("/", boardInit("query"), async (req, res, next) => {
   try {
-    const { type } = req.query;
+    req.query.field = req.query.field || "id";
+    req.query.search = req.query.search || "";
+    req.query.sort = req.query.sort || "desc";
+    req.query.page = req.query.page || 1;
+    const { type, field, search, sort } = req.query;
     const { lists, pager, totalRecord } = await Board.searchList(
       req.query,
       BoardFile,

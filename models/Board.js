@@ -73,12 +73,14 @@ module.exports = (sequelize, { DataTypes, Op }) => {
 
   Board.getCount = async function (query) {
     return await this.count({
-      where: { ...sequelize.getWhere(query), binit_id: query.boardId },
+      where: {
+        [Op.and]: [{ ...sequelize.getWhere(query) }, { binit_id: query.boardId }],
+      },
     });
   };
 
   Board.searchList = async function (query, BoardFile, BoardInit) {
-    let { field = "id", sort = "desc", boardId, page = 1 } = query;
+    let { field, sort, boardId, page } = query;
     if (!boardId) {
       let { id } = await BoardInit.findOne({
         attributes: ["id"],
@@ -87,6 +89,7 @@ module.exports = (sequelize, { DataTypes, Op }) => {
         limit: 1,
       });
       boardId = id;
+      query.boardId = boardId;
     }
 
     const totalRecord = await this.getCount(query);
@@ -96,7 +99,9 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       order: [[field, sort]],
       offset: pager.startIdx,
       limit: pager.listCnt,
-      where: { ...sequelize.getWhere(query), binit_id: boardId },
+      where: {
+        [Op.and]: [{ ...sequelize.getWhere(query) }, { binit_id: boardId }],
+      },
       include: [{ model: BoardFile, attributes: ["saveName"] }],
     });
     const lists = rs

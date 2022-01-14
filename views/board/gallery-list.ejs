@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/css/<%= currents[1] %>-<%= boardType %>.css">
 <article class="board-container gallery-type list-page">
   <div class="my-2">
-    <div class="mb-2">총 레코드: <%= numeral(pager.totalRecord).format() %>개</div>
+    <div class="mb-2">총 레코드: <%= totalRecord %>개</div>
     <div class="d-flex">
       <%- include('../inc/search.ejs') %> 
       <%- include('../inc/sort.ejs') %> 
