@@ -7,7 +7,7 @@ const config = require("../config/config")[env];
 config.timezone = "+09:00";
 const db = {};
 
-Sequelize.prototype.getWhere = ({ field, search }) => {
+Sequelize.prototype.getWhere = function ({ field, search }) {
   let where = search ? { [field]: { [Op.like]: "%" + search + "%" } } : null;
   if (field === "tel" && search !== "") {
     where = this.where(this.fn("replace", this.col("tel"), "-", ""), {
