@@ -16,18 +16,18 @@ router.get("/", (req, res, next) => {
 });
 
 // 회원리스트
-router.get("/", pager(User), async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     let { field = "id", search = "", sort = "desc" } = req.query;
-    const users = await User.searchUser(req.query, req.pager);
+    const { lists, pager, totalRecord } = await User.searchList(req.query);
     const ejs = {
       telNumber,
-      pager: req.pager,
-      users,
+      pager,
+      lists,
+      totalRecord,
       field,
       sort,
       search,
-      numeral,
     };
     res.render("admin/user/user-list", ejs);
   } catch (err) {

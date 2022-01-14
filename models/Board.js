@@ -1,4 +1,4 @@
-const { getWhere, dateFormat, relPath } = require("../modules/util");
+const { dateFormat, relPath } = require("../modules/util");
 
 module.exports = (sequelize, { DataTypes, Op }) => {
   const Board = sequelize.define(
@@ -71,7 +71,7 @@ module.exports = (sequelize, { DataTypes, Op }) => {
 
   Board.getCount = async function (query) {
     return await this.count({
-      where: getWhere(sequelize, Op, query),
+      where: { ...sequelize.getWhere(query), binit_id: query.boardId },
     });
   };
 
@@ -81,7 +81,7 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       order: [[field || "id", sort || "desc"]],
       offset: pager.startIdx,
       limit: pager.listCnt,
-      where: { ...getWhere(sequelize, Op, query), binit_id: boardId },
+      where: { ...sequelize.getWhere(query), binit_id: boardId },
       include: [{ model: BoardFile, attributes: ["saveName"] }],
     });
     const lists = rs
