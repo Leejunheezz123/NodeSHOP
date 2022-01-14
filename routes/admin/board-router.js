@@ -1,11 +1,13 @@
 const path = require("path");
 const express = require("express");
 const createError = require("http-errors");
+const numeral = require("numeral");
 const router = express.Router();
 const { relPath, dateFormat } = require("../../modules/util");
 const boardInit = require("../../middlewares/boardinit-mw");
 const uploader = require("../../middlewares/multer-mw");
 const afterUploader = require("../../middlewares/after-multer-mw");
+const pager = require("../../middlewares/pager-mw");
 const { Board, BoardFile } = require("../../models");
 
 // 신규글 작성
@@ -17,25 +19,24 @@ router.get("/", boardInit("query"), (req, res, next) => {
 });
 
 // 리스트
-router.get("/", boardInit("query"), async (req, res, next) => {
+router.get("/", boardInit("query"), pager(Board), async (req, res, next) => {
   try {
-    const { type } = req.query;
-    const { boardId, boardType } = res.locals;
-    const _lists = await Board.findAll({
-      where: { binit_id: boardId },
-      include: [{ model: BoardFile, attributes: ["saveName"] }],
+    const { type, field = "id", search = "", sort = "desc" } = req.query;
+    req.query.field = field;
+    req.query.search = search;
+    req.query.search = search;
+    req.query.boardId = 1;
+    console.log(req.query);
+    const lists = await Board.searchList(req.query, req.pager, BoardFile);
+    res.render("admin/board/board-list", {
+      type,
+      lists,
+      numeral,
+      pager: req.pager,
+      field,
+      sort,
+      search,
     });
-    const lists = _lists
-      .map((v) => v.toJSON())
-      .map((v) => {
-        v.updatedAt = dateFormat(v.updatedAt);
-        if (v.BoardFiles.length) v.thumbSrc = relPath(v.BoardFiles[0].saveName);
-        delete v.createdAt;
-        delete v.deletedAt;
-        delete v.BoardFiles;
-        return v;
-      });
-    res.render("admin/board/board-list", { type, lists });
   } catch (err) {
     next(createError(err));
   }

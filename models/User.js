@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { getSeparateString } = require("../modules/util");
+const { getSeparateString, getWhere } = require("../modules/util");
 const generateUser = (_users) => {
   const users = _users.map((v) => {
     v.addr1 =
@@ -39,26 +39,6 @@ const generateUser = (_users) => {
     return v;
   });
   return users;
-};
-const generateWhere = (sequelize, Op, { field, search }) => {
-  let where = search ? { [field]: { [Op.like]: "%" + search + "%" } } : null;
-  if (field === "tel" && search !== "") {
-    where = sequelize.where(sequelize.fn("replace", sequelize.col("tel"), "-", ""), {
-      [Op.like]: "%" + search.replace(/-/g, "") + "%",
-    });
-  }
-  if (field === "addrRoad" && search !== "") {
-    where = {
-      [Op.or]: {
-        addrPost: { [Op.like]: "%" + search + "%" },
-        addrRoad: { [Op.like]: "%" + search + "%" },
-        addrJibun: { [Op.like]: "%" + search + "%" },
-        addrComment: { [Op.like]: "%" + search + "%" },
-        addrDetail: { [Op.like]: "%" + search + "%" },
-      },
-    };
-  }
-  return where;
 };
 
 module.exports = (sequelize, { DataTypes, Op }) => {
@@ -177,7 +157,7 @@ module.exports = (sequelize, { DataTypes, Op }) => {
 
   User.getCount = async function (query) {
     return await this.count({
-      where: generateWhere(sequelize, Op, query),
+      where: getWhere(sequelize, Op, query),
     });
   };
 
@@ -187,7 +167,7 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       order: [[field || "id", sort || "desc"]],
       offset: pager.startIdx,
       limit: pager.listCnt,
-      where: generateWhere(sequelize, Op, query),
+      where: getWhere(sequelize, Op, query),
     });
     const users = generateUser(rs);
     return users;

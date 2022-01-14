@@ -117,6 +117,27 @@ const dateFormat = (_date = new Date(), _type = "D") => {
   return moment(_date).format(type);
 };
 
+const getWhere = (sequelize, Op, { field, search }) => {
+  let where = search ? { [field]: { [Op.like]: "%" + search + "%" } } : null;
+  if (field === "tel" && search !== "") {
+    where = sequelize.where(sequelize.fn("replace", sequelize.col("tel"), "-", ""), {
+      [Op.like]: "%" + search.replace(/-/g, "") + "%",
+    });
+  }
+  if (field === "addrRoad" && search !== "") {
+    where = {
+      [Op.or]: {
+        addrPost: { [Op.like]: "%" + search + "%" },
+        addrRoad: { [Op.like]: "%" + search + "%" },
+        addrJibun: { [Op.like]: "%" + search + "%" },
+        addrComment: { [Op.like]: "%" + search + "%" },
+        addrDetail: { [Op.like]: "%" + search + "%" },
+      },
+    };
+  }
+  return where;
+};
+
 module.exports = {
   location,
   cutTail,
@@ -132,4 +153,5 @@ module.exports = {
   getSeparateString,
   getSeparateArray,
   dateFormat,
+  getWhere,
 };
