@@ -83,7 +83,7 @@ module.exports = (sequelize, { DataTypes, Op }) => {
     let { field, sort, boardId, page } = query;
     if (!boardId) {
       let { id } = await BoardInit.findOne({
-        attributes: ["id"],
+        attributes: ["id", "boardType"],
         order: [["id", "asc"]],
         offset: 0,
         limit: 1,
@@ -91,9 +91,14 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       boardId = id;
       query.boardId = boardId;
     }
-
+    const { boardType } = await BoardInit.findOne({
+      where: { id: boardId },
+      raw: true,
+    });
+    let listCnt = boardType === "gallery" ? 12 : 5;
+    let pagerCnt = 5;
     const totalRecord = await this.getCount(query);
-    const pager = createPager(page, totalRecord, (_listCnt = 5), (_pagerCnt = 5));
+    const pager = createPager(page, totalRecord, listCnt, pagerCnt);
 
     const rs = await this.findAll({
       order: [[field, sort]],
