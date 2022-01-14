@@ -1,4 +1,6 @@
+const numeral = require("numeral");
 const { dateFormat, relPath } = require("../modules/util");
+const createPager = require("../modules/pager-init");
 
 module.exports = (sequelize, { DataTypes, Op }) => {
   const Board = sequelize.define(
@@ -75,10 +77,23 @@ module.exports = (sequelize, { DataTypes, Op }) => {
     });
   };
 
-  Board.searchList = async function (query, pager, BoardFile) {
-    let { field = "id", sort = "desc", boardId } = query;
+  Board.searchList = async function (query, BoardFile, BoardInit) {
+    let { field = "id", sort = "desc", boardId, page = 1 } = query;
+    if (!boardId) {
+      let { id } = await BoardInit.findOne({
+        attributes: ["id"],
+        order: [["id", "asc"]],
+        offset: 0,
+        limit: 1,
+      });
+      boardId = id;
+    }
+
+    const totalRecord = await this.getCount(query);
+    const pager = createPager(page, totalRecord, (_listCnt = 5), (_pagerCnt = 5));
+
     const rs = await this.findAll({
-      order: [[field || "id", sort || "desc"]],
+      order: [[field, sort]],
       offset: pager.startIdx,
       limit: pager.listCnt,
       where: { ...sequelize.getWhere(query), binit_id: boardId },
@@ -94,7 +109,8 @@ module.exports = (sequelize, { DataTypes, Op }) => {
         delete v.BoardFiles;
         return v;
       });
-    return lists;
+
+    return { lists, pager, totalRecord: numeral(pager.totalRecord).format() };
   };
 
   return Board;

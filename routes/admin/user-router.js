@@ -4,8 +4,6 @@ const router = express.Router();
 const createError = require("http-errors");
 const { telNumber, alert, getSeparateArray } = require("../../modules/util");
 const { User } = require("../../models");
-const pager = require("../../middlewares/pager-mw");
-const numeral = require("numeral");
 
 // 회원 등록 화면
 router.get("/", (req, res, next) => {
