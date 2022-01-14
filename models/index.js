@@ -8,7 +8,7 @@ config.timezone = "+09:00";
 const db = {};
 
 Sequelize.prototype.getWhere = function ({ field, search }) {
-  let where = search ? { [field]: { [Op.like]: "%" + search + "%" } } : null;
+  let where = search ? { [field]: { [Op.like]: "%" + search + "%" } } : {};
   if (field === "tel" && search !== "") {
     where = this.where(this.fn("replace", this.col("tel"), "-", ""), {
       [Op.like]: "%" + search.replace(/-/g, "") + "%",
