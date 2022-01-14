@@ -23,16 +23,19 @@ router.get("/", boardInit("query"), async (req, res, next) => {
     const { boardId, boardType } = res.locals;
     const _lists = await Board.findAll({
       where: { binit_id: boardId },
-      include:
-        boardType === "gallery" ? [{ model: BoardFile, attributes: ["saveName"] }] : [],
+      include: [{ model: BoardFile, attributes: ["saveName"] }],
     });
-    /* const lists = _lists.map((v) => {
-      v.updatedAt = dateFormat(v.updatedAt);
-      if (v.BoardFiles) v.thumbSrc = relPath(v.BoardFiles[0].saveName);
-      return v;
-    }); */
-    res.json(_lists);
-    // res.render('admin/board/board-list', { type, lists });
+    const lists = _lists
+      .map((v) => v.toJSON())
+      .map((v) => {
+        v.updatedAt = dateFormat(v.updatedAt);
+        if (v.BoardFiles.length) v.thumbSrc = relPath(v.BoardFiles[0].saveName);
+        delete v.createdAt;
+        delete v.deletedAt;
+        delete v.BoardFiles;
+        return v;
+      });
+    res.render("admin/board/board-list", { type, lists });
   } catch (err) {
     next(createError(err));
   }
