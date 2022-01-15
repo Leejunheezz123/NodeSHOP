@@ -1,7 +1,6 @@
 const path = require("path");
 const express = require("express");
 const createError = require("http-errors");
-const numeral = require("numeral");
 const router = express.Router();
 const boardInit = require("../../middlewares/boardinit-mw");
 const uploader = require("../../middlewares/multer-mw");
@@ -10,7 +9,7 @@ const queries = require("../../middlewares/query-mw");
 const { Board, BoardFile, BoardInit } = require("../../models");
 
 // 신규글 작성
-router.get("/", boardInit("query"), (req, res, next) => {
+router.get("/", boardInit("query"), queries(), (req, res, next) => {
   const { type } = req.query;
   if (type === "create") {
     res.render("admin/board/board-form", { type, binit: req.binit });
@@ -18,9 +17,9 @@ router.get("/", boardInit("query"), (req, res, next) => {
 });
 
 // 리스트
-router.get("/", queries(), boardInit("query"), async (req, res, next) => {
+router.get("/", boardInit("query"), queries(), async (req, res, next) => {
   try {
-    const { lists, pager, totalRecord } = await Board.searchList(
+    const { lists, pager, totalRecord } = await Board.getLists(
       req.query,
       BoardFile,
       BoardInit
@@ -32,14 +31,14 @@ router.get("/", queries(), boardInit("query"), async (req, res, next) => {
 });
 
 // 상세수정
-router.get("/:id", queries([{ boardType: "default" }]), (req, res, next) => {
+router.get("/:id", boardInit("query"), queries(), (req, res, next) => {
   const { type } = req.query;
   if (type === "update") {
   } else next();
 });
 
 // 상세보기
-router.get("/:id", queries([{ boardType: "default" }]), async (req, res, next) => {
+router.get("/:id", boardInit("query"), queries(), async (req, res, next) => {
   try {
     const { type, boardType } = req.query;
     const id = req.params.id;
@@ -47,8 +46,8 @@ router.get("/:id", queries([{ boardType: "default" }]), async (req, res, next) =
       where: { id },
       include: [{ model: BoardFile }],
     });
-    res.json(Board.getViewData(lists));
-    // res.render('admin/board/board-view', { css: 'admin-board', boardType });
+    // res.json(Board.getViewData(lists));
+    res.render("admin/board/board-view", { list: Board.getViewData(lists)[0] });
   } catch (err) {
     next(createError(err));
   }

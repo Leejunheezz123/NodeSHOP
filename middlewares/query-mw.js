@@ -6,6 +6,7 @@ module.exports = (addQuery = []) => {
     req.query.sort = req.query.sort || "desc";
     req.query.page = req.query.page || 1;
     req.query.status = req.query.status || "";
+    req.query.binit = req.query.binit || "";
     for (let value of addQuery) {
       let k = Object.keys(value);
       let [v] = Object.values(value);

@@ -57,4 +57,13 @@
       }
     }
   }
+  &.view-page {
+    .td-content {
+      padding: inherit 0;
+      > div {
+        border: 1px solid $light-color;
+        min-height: 200px;
+      }
+    }
+  }
 }
