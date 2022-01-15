@@ -5,9 +5,9 @@ req.query.boardId -> 현재 게시판 정보
 const _ = require("lodash");
 const { BoardInit } = require("../models");
 
-module.exports = (field) => {
+module.exports = (_field = "query") => {
   return async (req, res, next) => {
-    let { boardId } = req[field];
+    let { boardId } = req[_field];
     const boardLists = await BoardInit.findAll({
       order: [["id", "asc"]],
     });
@@ -15,7 +15,8 @@ module.exports = (field) => {
       if (i === 0 && !boardId) boardId = v.id;
       return v.id == boardId;
     });
-    req[field].boardId = boardId;
+    req[_field].boardId = boardId;
+    req[_field].boardType = myBoard.boardType;
     res.locals.boardLists = _.sortBy(boardLists, "title");
     res.locals.boardId = boardId;
     res.locals.boardType = myBoard.boardType;
