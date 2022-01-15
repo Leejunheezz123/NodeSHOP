@@ -22,6 +22,7 @@
     <% if(currents[1] === 'board') { %> 
       <input type="hidden" name="boardId" value="<%= boardId %>">
     <% } %> 
+    <input type="hidden" name="status" value="<%= status %>">
     <select name="field" class="form-control mr-2" onchange="this.form.submit();">
       <option value="" 
       <%= (field === '' ? 'selected': '') %>>

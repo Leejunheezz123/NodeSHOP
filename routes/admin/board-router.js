@@ -6,6 +6,7 @@ const router = express.Router();
 const boardInit = require("../../middlewares/boardinit-mw");
 const uploader = require("../../middlewares/multer-mw");
 const afterUploader = require("../../middlewares/after-multer-mw");
+const queries = require("../../middlewares/query-mw");
 const { Board, BoardFile, BoardInit } = require("../../models");
 
 // 신규글 작성
@@ -17,27 +18,15 @@ router.get("/", boardInit("query"), (req, res, next) => {
 });
 
 // 리스트
-router.get("/", boardInit("query"), async (req, res, next) => {
+router.get("/", queries(), boardInit("query"), async (req, res, next) => {
   try {
-    req.query.field = req.query.field || "id";
-    req.query.search = req.query.search || "";
-    req.query.sort = req.query.sort || "desc";
-    req.query.page = req.query.page || 1;
-    const { type, field, search, sort } = req.query;
+    const { type, field, search, sort, status } = req.query;
     const { lists, pager, totalRecord } = await Board.searchList(
       req.query,
       BoardFile,
       BoardInit
     );
-    res.render("admin/board/board-list", {
-      type,
-      lists,
-      pager,
-      totalRecord,
-      field,
-      sort,
-      search,
-    });
+    res.render("admin/board/board-list", { type, lists, pager, totalRecord });
   } catch (err) {
     next(createError(err));
   }
