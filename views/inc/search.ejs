@@ -19,6 +19,9 @@
 </style>
 <div class="search-wrap">
   <form action="/<%= currents[0] %>/<%= currents[1] %>" method="GET" class="form-inline">
+    <% if(currents[1] === 'board') { %> 
+      <input type="hidden" name="boardId" value="<%= boardId %>">
+    <% } %> 
     <select name="field" class="form-control mr-2" onchange="this.form.submit();">
       <option value="" 
       <%= (field === '' ? 'selected': '') %>>
