@@ -2,6 +2,7 @@ const path = require("path");
 const express = require("express");
 const router = express.Router();
 const createError = require("http-errors");
+const queries = require("../../middlewares/query-mw");
 const { telNumber, alert, getSeparateArray } = require("../../modules/util");
 const { User } = require("../../models");
 
@@ -14,19 +15,11 @@ router.get("/", (req, res, next) => {
 });
 
 // 회원리스트
-router.get("/", async (req, res, next) => {
+router.get("/", queries(), async (req, res, next) => {
   try {
-    let { field = "id", search = "", sort = "desc" } = req.query;
+    let { field, search, sort, status } = req.query;
     const { lists, pager, totalRecord } = await User.searchList(req.query);
-    const ejs = {
-      telNumber,
-      pager,
-      lists,
-      totalRecord,
-      field,
-      sort,
-      search,
-    };
+    const ejs = { telNumber, pager, lists, totalRecord };
     res.render("admin/user/user-list", ejs);
   } catch (err) {
     next(createError(err));
@@ -70,8 +63,14 @@ router.put("/", async (req, res, next) => {
 });
 
 // 회원 삭제
-router.delete("/", (req, res, next) => {
-  res.send("/admin/user:DELETE");
+router.delete("/", async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    await User.destroy({ where: { id } });
+    res.redirect("/admin/user");
+  } catch (err) {
+    next(createError(err));
+  }
 });
 
 module.exports = { name: "/user", router };
