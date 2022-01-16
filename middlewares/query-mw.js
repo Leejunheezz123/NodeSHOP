@@ -33,13 +33,17 @@ module.exports = (_field = "query", addQuery = []) => {
     res.locals.goPath = goPath;
     res.locals.goQuery = goQuery + `&page=${req[_field].page}`;
 
-    res.locals.goPagers = [
-      { page: req[_field].page },
-      { boardId: req[_field].boardId },
-      { field: req[_field].field },
-      { search: req[_field].search },
-      { sort: req[_field].sort },
+    res.locals.goLists = [
+      { key: "page", value: req[_field].page },
+      { key: "field", value: req[_field].field },
+      { key: "search", value: req[_field].search },
+      { key: "sort", value: req[_field].sort },
     ];
+    if (res.locals.currents[1] === "board") {
+      res.locals.goLists.push({ key: "boardId", value: req[_field].boardId });
+      res.locals.goLists.push({ key: "boardType", value: req[_field].boardType });
+    }
+
     next();
   };
 };

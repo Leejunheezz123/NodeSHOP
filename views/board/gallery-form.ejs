@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/css/<%= currents[1] %>-<%= boardType %>.css">
 <article class="board-container default-type view-page">
-  <form action="/<%= currents[0] %>/<%= currents[1] %>" method="post" enctype="multipart/form-data" name="galleryForm">
+  <form action="<%= goPath %>" method="post" enctype="multipart/form-data" name="galleryForm">
     <input type="hidden" name="boardId" value="<%= boardId %>">
     <table class="table border-bottom">
       <tbody>
