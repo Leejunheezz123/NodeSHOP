@@ -7,7 +7,7 @@ const { telNumber, alert, getSeparateArray } = require("../../modules/util");
 const { User } = require("../../models");
 
 // 회원 등록 화면
-router.get("/", (req, res, next) => {
+router.get("/", queries(), (req, res, next) => {
   if (req.query.type === "create") {
     const ejs = { telNumber };
     res.render("admin/user/user-form", ejs);
@@ -27,7 +27,7 @@ router.get("/", queries(), async (req, res, next) => {
 });
 
 // 회원 수정 화면
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", queries(), async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { id: req.params.id } });
     user.tel = getSeparateArray(user.tel, "-");
@@ -51,12 +51,11 @@ router.post("/", async (req, res, next) => {
 // 회원 수정
 router.put("/", async (req, res, next) => {
   try {
-    const [rs] = await User.update(req.body, {
+    await User.update(req.body, {
       where: { id: req.body.id },
       individualHooks: true,
     });
-    if (rs) res.send(alert("회원수정이 완료되었습니다.", "/admin/user"));
-    else res.send(alert("처리되지 않았습니다", "/admin/user"));
+    res.send(alert("회원수정이 완료되었습니다.", "/admin/user"));
   } catch (err) {
     next(createError(err));
   }
