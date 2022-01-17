@@ -106,6 +106,18 @@ module.exports = (sequelize, { DataTypes, Op }) => {
     });
   };
 
+  User.associate = (models) => {
+    User.hasMany(models.BoardCounter, {
+      foreignKey: {
+        name: "user_id",
+        allowNull: true,
+      },
+      sourceKey: "id",
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    });
+  };
+
   User.beforeCreate(async (user) => {
     const { BCRYPT_SALT: salt, BCRYPT_ROUND: rnd } = process.env;
     const hash = await bcrypt.hash(user.userpw + salt, Number(rnd));

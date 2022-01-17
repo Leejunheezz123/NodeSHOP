@@ -70,6 +70,15 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
     });
+    Board.hasMany(models.BoardCounter, {
+      foreignKey: {
+        name: "board_id",
+        allowNull: false,
+      },
+      sourceKey: "id",
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    });
   };
 
   Board.getCount = async function (query) {
