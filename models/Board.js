@@ -98,6 +98,7 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       .map((v) => v.toJSON())
       .map((v) => {
         v.updatedAt = dateFormat(v.updatedAt, type === "view" ? "H" : "D");
+        v.readCounter = numeral(v.readCounter).format();
         v.files = [];
         if (v.BoardFiles.length) {
           for (let file of v.BoardFiles) {
