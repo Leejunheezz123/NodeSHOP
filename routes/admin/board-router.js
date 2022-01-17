@@ -33,19 +33,23 @@ router.get("/", boardInit(), queries(), async (req, res, next) => {
 });
 
 // 상세수정
-router.get("/:id", boardInit(), queries(), counter, (req, res, next) => {
+router.get("/:id", boardInit(), queries(), counter, async (req, res, next) => {
   const { type } = req.query;
   if (type === "update") {
+    const lists = await Board.findAll({
+      where: { id: req.params.id },
+      include: [{ model: BoardFile }],
+    });
+    // res.json(Board.getViewData(lists)[0]);
+    res.render("admin/board/board-update", { list: Board.getViewData(lists)[0] });
   } else next();
 });
 
 // 상세보기
 router.get("/:id", boardInit(), queries(), async (req, res, next) => {
   try {
-    const { type, boardType } = req.query;
-    const id = req.params.id;
     const lists = await Board.findAll({
-      where: { id },
+      where: { id: req.params.id },
       include: [{ model: BoardFile }],
     });
     // res.json(Board.getViewData(lists));
