@@ -5,6 +5,7 @@ const router = express.Router();
 const boardInit = require("../../middlewares/boardinit-mw");
 const uploader = require("../../middlewares/multer-mw");
 const afterUploader = require("../../middlewares/after-multer-mw");
+const counter = require("../../middlewares/board-counter-mw");
 const queries = require("../../middlewares/query-mw");
 const { Board, BoardFile, BoardInit } = require("../../models");
 
@@ -31,7 +32,7 @@ router.get("/", boardInit(), queries(), async (req, res, next) => {
 });
 
 // 상세수정
-router.get("/:id", boardInit(), queries(), (req, res, next) => {
+router.get("/:id", boardInit(), queries(), counter, (req, res, next) => {
   const { type } = req.query;
   if (type === "update") {
   } else next();

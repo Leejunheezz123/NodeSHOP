@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       ip: {
-        type: DataTypes.CHAR(15),
+        type: DataTypes.STRING(50),
         allowNull: true,
       },
       referrer: {

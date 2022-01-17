@@ -24,6 +24,10 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       content: {
         type: DataTypes.TEXT,
       },
+      readCounter: {
+        type: DataTypes.INTEGER(10).UNSIGNED,
+        defaulValue: 0,
+      },
     },
     {
       charset: "utf8",
