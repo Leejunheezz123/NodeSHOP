@@ -67,33 +67,41 @@ router.post(
   boardInit("body"),
   async (req, res, next) => {
     try {
-      req.body.user_id = 1; // 회원작업 후 수정 예정
-      req.body.binit_id = res.locals.boardId;
-      const board = await Board.create(req.body);
-      req.files.forEach((file) => (file.board_id = board.id));
-      const files = await BoardFile.bulkCreate(req.files);
-      res.redirect("/admin/board?boardId=" + res.locals.boardId);
+      if (req.body.type === "update") {
+        // const board = await Board.update(req.body, { where: { id: req.body.id } });
+        // req.files.forEach((file) => (file.board_id = board.id));
+        // const files = await BoardFile.bulkCreate(req.files);
+        // res.redirect(res.locals.goList);
+        res.json({ file: req.files, req: req.body, locals: res.locals });
+      } else {
+        req.body.user_id = 1; // 회원작업 후 수정 예정
+        req.body.binit_id = res.locals.boardId;
+        const board = await Board.create(req.body);
+        req.files.forEach((file) => (file.board_id = board.id));
+        const files = await BoardFile.bulkCreate(req.files);
+        res.redirect("/admin/board?boardId=" + res.locals.boardId);
+      }
     } catch (err) {
       next(createError(err));
     }
   }
 );
 
-router.put("/", (req, res, next) => {
-  res.send("/admin/board:PUT");
-});
-
 router.delete("/", boardInit(), queries("body"), async (req, res, next) => {
-  await Board.destroy({ where: { id: req.body.id } });
-  const files = await BoardFile.findAll({
-    attributes: ["saveName"],
-    where: { board_id: req.body.id },
-  });
-  await BoardFile.destroy({ where: { board_id: req.body.id } });
-  for (let { saveName } of files) {
-    await moveFile(saveName);
+  try {
+    await Board.destroy({ where: { id: req.body.id } });
+    const files = await BoardFile.findAll({
+      attributes: ["saveName"],
+      where: { board_id: req.body.id },
+    });
+    await BoardFile.destroy({ where: { board_id: req.body.id } });
+    for (let { saveName } of files) {
+      await moveFile(saveName);
+    }
+    res.redirect(res.locals.goList);
+  } catch (err) {
+    next(createError(err));
   }
-  res.redirect(res.locals.goList);
 });
 
 module.exports = { name: "/board", router };
