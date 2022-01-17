@@ -30,15 +30,16 @@
           <td>이미지 첨부</td>
           <td>
             <% for(let i=0; i<useImg; i++) { %> 
-              <div class="file-wrap">
-                <% if(list.files[i] && list.files[i].type === 'I') { %>
-                <% let { thumbSrc, name, id, type } = list.files[i]; %>
-                  <img src="<%= thumbSrc %>" alt="<%= name %>" class="img">
-                  <div class="file"><%= name %></div>
-                  <button type="button" class="btn btn-sm btn-danger" data-idx="<%= id %>" onclick="onDeleteFile('<%= id %>', this)">삭제</button>
-                <% } %>
-							</div>
-              <input type="file" name="img" class="form-control-file mb-2">
+              <% if(list.imgs[i] && list.imgs[i].type === 'I') { %>
+                  <div class="file-wrap">
+                  <% let { thumbSrc, name, id, type } = list.imgs[i]; %>
+                    <img src="<%= thumbSrc %>" alt="<%= name %>" class="img">
+                    <div class="file"><%= name %></div>
+                    <button type="button" class="btn btn-sm btn-danger" data-idx="<%= id %>" onclick="onDeleteFile('<%= id %>', this)">삭제</button>
+                  </div>
+              <% } else { %>
+                <input type="file" name="img" class="form-control-file mb-2">
+              <% } %>
             <% } %>
           </td>
         </tr>
@@ -46,14 +47,15 @@
           <td>파일 첨부</td>
           <td>
             <% for(let i=0; i<useFile; i++) { %>
-            <div class="file-wrap">
               <% if(list.files[i] && list.files[i].type === 'F') { %>
-              <% let { name, id, type } = list.files[i]; %>
-              <div class="file"><%= name %></div>
-              <button type="button" class="btn btn-sm btn-danger" onclick="onDeleteFile('<%= id %>', this)">삭제</button>
+                <div class="file-wrap">
+                  <% let { name, id, type } = list.files[i]; %>
+                  <div class="file"><%= name %></div>
+                  <button type="button" class="btn btn-sm btn-danger" onclick="onDeleteFile('<%= id %>', this)">삭제</button>
+                </div>
+              <% } else { %>
+                <input type="file" name="pds" class="form-control-file mb-2">
               <% } %>
-            </div>
-            <input type="file" name="pds" class="form-control-file mb-2">
             <% } %>
           </td>
         </tr>
