@@ -7,7 +7,10 @@ function onDeleteFile(id, el) {
   }
   function onSucess(r) {
     if (r.data.code == 200) {
-      var html = '<input type="file" name="pds" class="form-control-file mb-2" />';
+      var html =
+        '<input type="file" name="' +
+        $(el).data("name") +
+        '" class="form-control-file mb-2" />';
       $(el).parent().after(html);
       $(el).parent().remove();
     }
