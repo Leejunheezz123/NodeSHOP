@@ -1,8 +1,5 @@
 [
   {
-    "id": "Shop01",
-    "text": "Shop",
-    "max_depth": 3,
-    "max_children": 3
+    "text": "Shop"
   }
 ]

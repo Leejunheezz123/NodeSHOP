@@ -1,5 +1,11 @@
 var core = {};
-var plugins = ["contextmenu", "dnd", "search", "state", "wholerow", "changed"];
+var plugins = ["contextmenu", "dnd", "search", "state", "wholerow", "changed", "types"];
+
+var types = {
+  default: {
+    max_depth: 2,
+  },
+};
 
 core.themes = {
   variant: "large",
@@ -18,19 +24,15 @@ core.data = {
 };
 
 function onChangedTree(e, data) {
-  /* var json = $('#jstreeWrap').jstree(true).get_json('#');
-  axios
-    .post('/api/tree', { json })
-    .then(function (r) {
-      console.log(r);
-    })
-    .catch(function (err) {
-      console.log(err);
-    }); */
+  console.log(data.node.id);
 }
 
 function onCreateTree(e, data) {
-  console.log(data);
+  console.log(data.node);
+}
+
+function onDeleteTree(e, data) {
+  console.log(data.node.id);
 }
 
 function onUpdateTree() {
@@ -47,8 +49,7 @@ function onUpdateTree() {
 }
 
 $("#jstreeWrap")
-  .jstree({ core: core, plugins: plugins })
-  .on("create_node.jstree", onCreateTree)
+  .jstree({ core: core, plugins: plugins, types })
   .on("rename_node.jstree", onUpdateTree)
   .on("move_node.jstree", onUpdateTree)
   .on("delete_node.jstree", onUpdateTree);
