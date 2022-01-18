@@ -104,10 +104,16 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
     });
-  };
-
-  User.associate = (models) => {
     User.hasMany(models.BoardCounter, {
+      foreignKey: {
+        name: "user_id",
+        allowNull: true,
+      },
+      sourceKey: "id",
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    });
+    User.hasMany(models.BoardComment, {
       foreignKey: {
         name: "user_id",
         allowNull: true,
