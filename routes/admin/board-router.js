@@ -91,14 +91,15 @@ router.post(
 
 router.delete("/", boardInit(), queries("body"), async (req, res, next) => {
   try {
-    await Board.destroy({ where: { id: req.body.id } });
+    await Board.destroy({
+      where: { id: req.body.id },
+    });
     const files = await BoardFile.findAll({
       attributes: ["saveName"],
       where: { board_id: req.body.id },
     });
-    await BoardFile.destroy({
-      where: { board_id: req.body.id },
-    });
+    await BoardFile.destroy({ where: { board_id: req.body.id } });
+    await BoardComment.destroy({ where: { board_id: req.body.id } });
     for (let { saveName } of files) {
       await moveFile(saveName);
     }
