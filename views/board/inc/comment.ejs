@@ -19,6 +19,15 @@
           <p class="comment"><%= v.comment %></p>
         </div>
         <span class="date"><%= v.regDate %></span>
+        <button class="btn btn-danger btn-sm bt-delete">삭제</button>
+        <form action="/<%= currents[0] %>/comment" method="POST" name="deleteCommentForm">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="id" value="<%= v.id %>">
+          <input type="hidden" name="board_id" value="<%= list.id %>">
+          <% for(let v of goLists) { %>
+            <input type="hidden" name="<%= v.key %>" value="<%= v.value %>">
+          <% } %>
+        </form>
       </li>
     <% } %>
   </ul>
@@ -31,14 +40,21 @@
     e.preventDefault();
     var writer = this.writer.value.trim();
     var comment = this.comment.value.trim();
-    if(writer === '') {
+    if (writer === '') {
       this.writer.focus();
       return false;
     }
-    if(comment === '') {
+    if (comment === '') {
       this.comment.focus();
       return false;
     }
     this.submit();
+  }
+  $('.bt-delete').click(onDeleteComment);
+  function onDeleteComment() {
+    var f = $(this).next()[0];
+    if(confirm('댓글을 삭제하시겠습니까?')) {
+      f.submit();
+    }
   }
 </script>
