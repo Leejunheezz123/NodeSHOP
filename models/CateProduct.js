@@ -5,12 +5,6 @@ module.exports = (sequelize, { DataTypes, Op }) => {
   const CateProduct = sequelize.define(
     "CateProduct",
     {
-      id: {
-        type: DataTypes.INTEGER(10).UNSIGNED,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false,
-      },
       prd_id: {
         type: DataTypes.INTEGER(10).UNSIGNED,
         primaryKey: true,
