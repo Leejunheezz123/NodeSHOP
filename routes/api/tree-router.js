@@ -12,4 +12,16 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.post("/", async (req, res, next) => {
+  try {
+    const tree = await fs.writeJSON(
+      path.join(__dirname, "../../json/tree.json"),
+      req.body.json
+    );
+    res.status(200).json({ success: true });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = { name: "/tree", router };

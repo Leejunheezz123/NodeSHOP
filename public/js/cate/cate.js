@@ -2,7 +2,7 @@ var core = {};
 var plugins = ["contextmenu", "dnd", "search", "state", "wholerow", "changed"];
 
 core.themes = {
-  variant: true,
+  variant: "large",
   striped: true,
 };
 
@@ -18,8 +18,16 @@ core.data = {
 };
 
 function onChangedTree(e, data) {
-  console.log(data.changed.selected); // newly selected
-  console.log(data.changed.deselected); // newly deselected
+  var json = $("#jstreeWrap").jstree(true).get_json("#");
+  console.log(json);
+  axios
+    .post("/api/tree", { json })
+    .then(function (r) {
+      console.log(r);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
 }
 
 $("#jstreeWrap")
