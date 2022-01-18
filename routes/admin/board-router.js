@@ -44,12 +44,17 @@ router.get("/:id", boardInit(), queries(), counter, async (req, res, next) => {
 // 상세보기
 router.get("/:id", boardInit(), queries(), async (req, res, next) => {
   try {
-    const lists = await Board.findAll({
-      where: { id: req.params.id },
-      include: [{ model: BoardFile }, { model: BoardComment, order: [["id", "desc"]] }],
+    const { lists, pager } = await Board.getList(
+      req.params.id,
+      req.query,
+      BoardFile,
+      BoardComment
+    );
+    // res.json({ list: Board.getViewData(lists)[0], pager });
+    res.render("admin/board/board-view", {
+      list: Board.getViewData(lists)[0],
+      pager,
     });
-    // res.json(Board.getViewData(lists));
-    res.render("admin/board/board-view", { list: Board.getViewData(lists)[0] });
   } catch (err) {
     next(createError(err));
   }

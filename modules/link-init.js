@@ -32,7 +32,7 @@ module.exports = {
       }, */
       {
         path: "//analytics.google.com",
-        link: "/admin/analytics",
+        link: "//analytics.google.com",
         src: "b9",
         target: "_blank",
       },
