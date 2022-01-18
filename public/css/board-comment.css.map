@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "mappings": "AAGA,AAAA,gBAAgB,AAAC,CACf,MAAM,CAAE,OAAO,CACf,OAAO,CAAE,KAAK,CACd,UAAU,CAAE,GAAG,CAAC,MAAM,CCKX,OAAO,CDJnB",
+    "sources": [
+        "../scss/board/board-comment.scss",
+        "../scss/_variables.scss",
+        "../scss/_mixins.scss",
+        "../scss/_variables.scss"
+    ],
+    "names": [],
+    "file": "board-comment.css"
+}

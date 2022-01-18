@@ -32,7 +32,7 @@ router.get("/logout", (req, res, next) => {
   console.log(res.locals.user);
   req.logout();
   res.locals.user = null;
-  res.send(alert("로그아웃 되었습니다.", "/admin"));
+  res.send(alert("로그아웃 되었습니다.", "/admin/auth/login"));
 });
 
 module.exports = { name: "/auth", router };

@@ -183,8 +183,11 @@ module.exports = (sequelize, { DataTypes, Op }) => {
           case "2":
             v.level = "일반회원";
             break;
-          case "8":
+          case "7":
             v.level = "관리자";
+            break;
+          case "8":
+            v.level = "중간관리자";
             break;
           case "9":
             v.level = "최고관리자";
