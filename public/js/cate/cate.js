@@ -1,10 +1,12 @@
 var core = {};
-var plugins = ["contextmenu", "dnd", "state", "wholerow", "changed"];
+var plugins = ["contextmenu", "dnd", "search", "state", "wholerow", "changed"];
 
 core.themes = {
   variant: true,
   striped: true,
 };
+
+core.check_callback = true;
 
 core.data = {
   url: function (node) {
