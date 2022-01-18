@@ -29,15 +29,13 @@ function onChangedTree(e, data) {
 
 function onCreateTree(e, data) {
   axios
-    .post("/api/tree", { node: data.node })
+    .post("/api/tree", { id: data.node.id })
+    .then(onUpdateTree)
     .then(function (r) {
       $("#jstreeWrap").jstree().refresh();
     })
     .catch(function (err) {
-      console.log("============");
-      console.log("== create ==");
       console.log(err);
-      console.log("============");
     });
 }
 
@@ -46,23 +44,19 @@ function onDeleteTree(e, data) {
 }
 
 function onUpdateTree() {
-  var json = $("#jstreeWrap").jstree(true).get_json("#");
   axios
-    .put("/api/tree", { json })
+    .put("/api/tree", { node: $("#jstreeWrap").jstree(true).get_json("#") })
     .then(function (r) {
       $("#jstreeWrap").jstree().refresh();
     })
     .catch(function (err) {
-      console.log("============");
-      console.log("== update ==");
       console.log(err);
-      console.log("============");
     });
 }
 
 $("#jstreeWrap")
   .jstree({ core: core, plugins: plugins, types })
   .on("create_node.jstree", onCreateTree)
-  .on("rename_node.jstree", onRenameTree)
-  .on("move_node.jstree", onUpdateTree)
-  .on("delete_node.jstree", onDeleteTree);
+  .on("rename_node.jstree", onUpdateTree)
+  .on("move_node.jstree", onUpdateTree);
+// .on('delete_node.jstree', onDeleteTree);
