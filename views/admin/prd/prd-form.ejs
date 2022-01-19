@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="/css/quill.snow.css">
 <section class="prd-wrapper wrapper form-wrapper">
   <h4 class="title bullet my-2">상품 등록</h4>
-  <form action="/<%= currents[0] %>/<%= currents[1] %>" method="POST" enctype="multipart/form-data" name="prdCreateForm">
+  <form action="/<%= currents[0] %>/<%= currents[1] %>" method="POST"  name="prdCreateForm">
     <table class="table border-bottom">
       <tbody>
         <tr>
@@ -58,7 +58,8 @@
         </tr>
         <tr>
           <td colspan="2">
-            <div id="editor" name="content" style="min-height: 200px;"></div>
+            <div id="editor" style="min-height: 200px;"></div>
+            <input type="hidden" name="content">
           </td>
         </tr>
         <tr>

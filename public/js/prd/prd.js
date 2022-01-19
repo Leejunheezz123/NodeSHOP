@@ -33,5 +33,6 @@ function onSubmitPrdCreateForm(e) {
     this.title.focus();
     return false;
   }
+  this.content.value = quill.container.innerHTML;
   this.submit();
 }
