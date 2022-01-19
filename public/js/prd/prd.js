@@ -18,9 +18,25 @@ core.data = {
   },
 };
 
-$("#jstreeWrap").jstree({ core: core, plugins: plugins });
+$("#jstreeWrap")
+  .jstree({ core: core, plugins: plugins })
+  .on("changed.jstree", onChangeTree);
 
-// Quill
+function onChangeTree(e, data) {
+  console.log(data.selected);
+}
+
+$(".prd-wrapper .bt-modal-close").click(onCloseModal);
+function onCloseModal() {
+  $(".prd-wrapper .modal-wrapper").hide();
+}
+
+$(".prd-wrapper .bt-cate").click(onClickCate);
+function onClickCate() {
+  $(".prd-wrapper .modal-wrapper").show();
+}
+
+/******************** quill ********************/
 var toolbarOptions = [
   ["bold", "italic", "underline", "strike"], // toggled buttons
   ["blockquote", "code-block"],
@@ -58,14 +74,4 @@ function onSubmitPrdCreateForm(e) {
   }
   this.content.value = quill.root.innerHTML;
   this.submit();
-}
-
-$(".form-wrapper .bt-cate").click(onClickCate);
-function onClickCate() {
-  axios
-    .get("/api/cate")
-    .then(function (r) {})
-    .catch(function (err) {
-      console.log(err);
-    });
 }
