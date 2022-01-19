@@ -4,7 +4,7 @@ const router = express.Router();
 const escape = require("escape-html");
 const createError = require("http-errors");
 const { error } = require("../../modules/util");
-const { Product, ProductFile } = require("../../models");
+const { Product, ProductFile, CateProduct } = require("../../models");
 const uploader = require("../../middlewares/multer-mw");
 const afterUploader = require("../../middlewares/after-multer-mw");
 const { moveFile } = require("../../modules/util");
@@ -39,14 +39,24 @@ router.post(
   queries("body"),
   async (req, res, next) => {
     try {
-      res.json({
-        body: req.body,
-        content: escape(req.body.content),
-        files: req.files,
-      });
-      // req.body.content = escape(req.body.content);
-      // await Product.create(req.body)
-      // res.redirect('/admin/prd');
+      if (req.body.type === "update") {
+        // await Board.update(req.body, { where: { id: req.body.id } });
+        // req.files.forEach((file) => (file.board_id = req.body.id));
+        // const files = await BoardFile.bulkCreate(req.files);
+        // res.json({ file: req.files, req: req.body, locals: res.locals });
+        // res.redirect(res.locals.goList);
+      } else {
+        req.body.content = escape(req.body.content);
+        const product = await Product.create(req.body);
+        req.files.forEach((file) => (file.prd_id = product.id));
+        await ProductFile.bulkCreate(req.files);
+        const catePrd = req.body.cate.split(",").map((cate) => ({
+          cate_id: cate,
+          prd_id: product.id,
+        }));
+        await CateProduct.bulkCreate(catePrd);
+        res.redirect("/admin/prd");
+      }
     } catch (err) {
       next(createError(err));
     }

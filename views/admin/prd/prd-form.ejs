@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/css/jstree/style.min.css">
 <section class="prd-wrapper wrapper form-wrapper">
   <h4 class="title bullet my-2">상품 등록</h4>
-  <form action="/<%= currents[0] %>/<%= currents[1] %>" method="POST"  name="prdCreateForm">
+  <form action="/<%= currents[0] %>/<%= currents[1] %>" method="POST"  name="prdCreateForm" enctype="multipart/form-data">
     <input type="hidden" name="cate">
     <table class="table border-bottom">
       <tbody>
