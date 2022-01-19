@@ -1,6 +1,7 @@
 <%- include('../../inc/head.ejs') %>
 <%- include('../../inc/header.ejs') %>
 <link rel="stylesheet" href="/css/quill.snow.css">
+<link rel="stylesheet" href="/css/jstree/style.min.css">
 <section class="prd-wrapper wrapper form-wrapper">
   <h4 class="title bullet my-2">상품 등록</h4>
   <form action="/<%= currents[0] %>/<%= currents[1] %>" method="POST"  name="prdCreateForm">
@@ -89,11 +90,12 @@
   </form>
   <div class="modal-wrapper">
     <div class="modal-wrap">
-      <div id="jsTree"></div>
+      <div id="jstreeWrap"></div>
     </div>
   </div>
 </section>
 <script src="/js/quill.min.js"></script>
 <script src="/js/axios.min.js"></script>
+<script src="/js/jstree.min.js"></script>
 <script src="/js/<%= currents[1] %>/<%= currents[1] %>.js"></script>
 <%- include('../../inc/foot.ejs') %>

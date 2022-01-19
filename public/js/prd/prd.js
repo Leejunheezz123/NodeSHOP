@@ -10,10 +10,15 @@ core.themes = {
 core.check_callback = true;
 
 core.data = {
+  url: function (node) {
+    return "/api/tree";
+  },
   data: function (node) {
     return { id: node.id };
   },
 };
+
+$("#jstreeWrap").jstree({ core: core, plugins: plugins });
 
 // Quill
 var toolbarOptions = [
