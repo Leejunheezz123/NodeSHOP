@@ -24,3 +24,14 @@ var quill = new Quill("#editor", {
   },
   theme: "snow",
 });
+
+$('form[name="prdCreateForm"]').submit(onSubmitPrdCreateForm);
+function onSubmitPrdCreateForm(e) {
+  e.preventDefault();
+  var title = this.title.value.trim();
+  if (title === "") {
+    this.title.focus();
+    return false;
+  }
+  this.submit();
+}
