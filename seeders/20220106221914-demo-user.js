@@ -22,7 +22,7 @@ module.exports = {
     for (let i = 0; i < 99; i++) {
       insertUsers.push({
         userid: "test" + i,
-        userpw: "111111",
+        userpw: await bcrypt.hash("111111" + salt, Number(round)),
         username: "테스트유저" + i,
         email: "test" + i + "@test.com",
         tel: `010-7777-${numeral(i).format("0000")}`,
