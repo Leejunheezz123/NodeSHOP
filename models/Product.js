@@ -11,9 +11,35 @@ module.exports = (sequelize, { DataTypes, Op }) => {
         primaryKey: true,
         allowNull: false,
       },
-      name: {
+      title: {
         type: DataTypes.STRING(255),
         allowNull: false,
+      },
+      priceOrigin: {
+        type: DataTypes.INTEGER(10),
+        allowNull: true,
+      },
+      priceSale: {
+        type: DataTypes.INTEGER(10),
+        allowNull: true,
+      },
+      amount: {
+        type: DataTypes.INTEGER(10),
+        allowNull: false,
+        defaultValue: -1,
+      },
+      status: {
+        type: DataTypes.ENUM,
+        values: ["0", "1", "2"],
+        defaultValue: "2",
+      },
+      summary: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      content: {
+        type: DataTypes.TEXT,
+        allowNull: true,
       },
     },
     {

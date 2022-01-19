@@ -41,4 +41,12 @@
       }
     }
   }
+  &.form-wrapper {
+    .small {
+      width: 200px;
+    }
+    .red {
+      color: red;
+    }
+  }
 }
