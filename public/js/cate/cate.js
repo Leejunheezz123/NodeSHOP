@@ -37,13 +37,12 @@ function onCreateTree(e, data) {
 }
 
 function onDeleteTree(e, data) {
-  axios.delete("/api/tree", { data: { id: data.node.id } }).then(function (r) {
-    console.log(r);
-  });
-  // .then(onUpdateTree)
-  // .catch(function (err) {
-  //   console.log(err);
-  // });
+  axios
+    .delete("/api/tree", { data: { id: data.node.id } })
+    .then(onUpdateTree)
+    .catch(function (err) {
+      console.log(err);
+    });
 }
 
 function onUpdateTree() {

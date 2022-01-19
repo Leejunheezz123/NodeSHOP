@@ -119,12 +119,20 @@ const dateFormat = (_date = new Date(), _type = "D") => {
 
 // _obj에서 id에 해당하는 객체를 찾는순간 멈추는 재귀함수
 function findObj(_obj, id) {
-  if (_obj.id !== id) {
-    for (let v of _obj.children) {
-      findObj(v, id);
+  let a = null;
+  function findInner(_obj, id) {
+    if (_obj.id !== id) {
+      if (_obj.children) {
+        for (let v of _obj.children) {
+          findInner(v, id);
+        }
+      }
+    } else {
+      a = _obj;
     }
+    return a;
   }
-  return _obj;
+  return findInner(_obj, id);
 }
 
 // _obj의 자식들의 id를 리턴하는 재귀함수
