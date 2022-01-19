@@ -53,6 +53,15 @@ module.exports = (sequelize, { DataTypes, Op }) => {
   );
 
   Product.associate = (models) => {
+    Product.hasMany(models.ProductFile, {
+      foreignKey: {
+        name: "prd_id",
+        allowNull: false,
+      },
+      sourceKey: "id",
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
+    });
     Product.belongsToMany(models.Cate, {
       foreignKey: {
         name: "prd_id",

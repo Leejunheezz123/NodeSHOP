@@ -5,6 +5,7 @@ const fs = require("fs-extra");
 const { v4: uuid } = require("uuid");
 const { exts } = require("../modules/util");
 const allowExt = [...exts.imgExt, ...exts.docExt, ...exts.mediaExt, ...exts.zipExt];
+const allowImg = [...exts.imgExt];
 const mega = 1024000;
 
 const destination = async (req, file, cb) => {
@@ -30,7 +31,8 @@ const filename = (req, file, cb) => {
 const fileFilter = (req, file, cb) => {
   try {
     const ext = path.extname(file.originalname).substr(1).toLowerCase();
-    if (allowExt.includes(ext)) cb(null, true);
+    if (file.fieldname === "pds" && allowExt.includes(ext)) cb(null, true);
+    else if (allowImg.includes(ext)) cb(null, true);
     else cb(new Error(`첨부하신 파일은 업로드가 허용되지 않습니다 - ${ext}파일`));
   } catch (err) {
     cb(err);
