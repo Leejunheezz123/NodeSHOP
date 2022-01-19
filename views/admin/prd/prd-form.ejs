@@ -8,6 +8,15 @@
       <tbody>
         <tr>
           <td class="title" style="width: 15%;">
+            카테고리 등록
+            <span class="red">*</span>
+          </td>
+          <td class="content">
+            <button class="btn btn-info btn-sm bt-cate">카테고리 선택</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="title" style="width: 15%;">
             상품명
             <span class="red">*</span>
           </td>
@@ -78,7 +87,13 @@
       <button type="reset" class="btn btn-danger mx-1">다시작성</button>
     </div>
   </form>
+  <div class="modal-wrapper">
+    <div class="modal-wrap">
+      <div id="jsTree"></div>
+    </div>
+  </div>
 </section>
 <script src="/js/quill.min.js"></script>
+<script src="/js/axios.min.js"></script>
 <script src="/js/<%= currents[1] %>/<%= currents[1] %>.js"></script>
 <%- include('../../inc/foot.ejs') %>
