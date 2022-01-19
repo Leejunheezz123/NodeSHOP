@@ -17,11 +17,13 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       },
       priceOrigin: {
         type: DataTypes.INTEGER(10),
-        allowNull: true,
+        allowNull: false,
+        defaultValue: 0,
       },
       priceSale: {
         type: DataTypes.INTEGER(10),
-        allowNull: true,
+        allowNull: false,
+        defaultValue: 0,
       },
       amount: {
         type: DataTypes.INTEGER(10),
