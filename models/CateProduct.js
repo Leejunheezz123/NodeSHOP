@@ -45,6 +45,5 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       onDelete: "CASCADE",
     });
   };
-
   return CateProduct;
 };

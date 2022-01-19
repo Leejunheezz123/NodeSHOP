@@ -2,6 +2,8 @@ const path = require("path");
 const fs = require("fs-extra");
 const express = require("express");
 const { Cate } = require("../../models");
+const tree = require("../../middlewares/tree-mw");
+const { findChildId } = require("../../modules/util");
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
@@ -30,6 +32,17 @@ router.post("/", async (req, res, next) => {
     await Cate.create({ id: req.body.id });
     res.status(200).json({ success: true });
   } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.delete("/", tree(), async (req, res, next) => {
+  try {
+    findChild(findObj(_obj, id), []);
+    const treeArray = findChildId(req.tree, req.body.id);
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });

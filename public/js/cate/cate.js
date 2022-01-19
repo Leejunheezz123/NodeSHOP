@@ -31,16 +31,19 @@ function onCreateTree(e, data) {
   axios
     .post("/api/tree", { id: data.node.id })
     .then(onUpdateTree)
-    .then(function (r) {
-      $("#jstreeWrap").jstree().refresh();
-    })
     .catch(function (err) {
       console.log(err);
     });
 }
 
 function onDeleteTree(e, data) {
-  console.log(data.node.id);
+  axios.delete("/api/tree", { data: { id: data.node.id } }).then(function (r) {
+    console.log(r);
+  });
+  // .then(onUpdateTree)
+  // .catch(function (err) {
+  //   console.log(err);
+  // });
 }
 
 function onUpdateTree() {
@@ -58,5 +61,5 @@ $("#jstreeWrap")
   .jstree({ core: core, plugins: plugins, types })
   .on("create_node.jstree", onCreateTree)
   .on("rename_node.jstree", onUpdateTree)
-  .on("move_node.jstree", onUpdateTree);
-// .on('delete_node.jstree', onDeleteTree);
+  .on("move_node.jstree", onUpdateTree)
+  .on("delete_node.jstree", onDeleteTree);

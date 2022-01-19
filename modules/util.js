@@ -117,6 +117,27 @@ const dateFormat = (_date = new Date(), _type = "D") => {
   return moment(_date).format(type);
 };
 
+// _obj에서 id에 해당하는 객체를 찾는순간 멈추는 재귀함수
+function findObj(_obj, id) {
+  if (_obj.id !== id) {
+    for (let v of _obj.children) {
+      findObj(v, id);
+    }
+  }
+  return _obj;
+}
+
+// _obj의 자식들의 id를 리턴하는 재귀함수
+function findChildId(_obj, arr) {
+  if (_obj.children) {
+    for (let v of _obj.children) {
+      findChildId(v, arr);
+    }
+  }
+  arr.push(_obj.id);
+  return arr;
+}
+
 module.exports = {
   location,
   cutTail,
@@ -132,4 +153,6 @@ module.exports = {
   getSeparateString,
   getSeparateArray,
   dateFormat,
+  findChildId,
+  findObj,
 };
