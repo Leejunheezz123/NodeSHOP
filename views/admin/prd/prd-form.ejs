@@ -7,9 +7,25 @@
     <table class="table border-bottom">
       <tbody>
         <tr>
-          <td class="title" style="width: 15%;">상품명</td>
+          <td class="title" style="width: 15%;">
+            상품명
+            <span class="red">*</span>
+          </td>
           <td class="content">
             <input type="text" name="title" class="form-control" placeholder="상품명">
+          </td>
+        </tr>
+        <tr>
+          <td class="title" style="width: 15%;">
+            판매여부
+            <span class="red">*</span>
+          </td>
+          <td class="content">
+            <select name="status" class="form-control small">
+              <option value="0">판매중지</option>
+              <option value="1">일시판매중지</option>
+              <option value="2">판매중</option>
+            </select>
           </td>
         </tr>
         <tr>
@@ -25,7 +41,10 @@
           </td>
         </tr>
         <tr>
-          <td class="title">재고량</td>
+          <td class="title">
+            재고량
+            <span class="red">*</span>
+          </td>
           <td class="content">
             <input type="number" name="amount" class="form-control small" placeholder="재고량" value="-1">
             <div class="red">* -1을 입력하면 재고량 파악을 하지 않습니다(무제한)</div>
