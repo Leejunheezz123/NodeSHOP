@@ -1,10 +1,10 @@
 const path = require("path");
 const express = require("express");
 const router = express.Router();
-const escape = require("escape-html");
+const { escape, unescape } = require("html-escaper");
 const createError = require("http-errors");
 const { error } = require("../../modules/util");
-const { Product, ProductFile, CateProduct } = require("../../models");
+const { Product, ProductFile, CateProduct, Cate } = require("../../models");
 const uploader = require("../../middlewares/multer-mw");
 const afterUploader = require("../../middlewares/after-multer-mw");
 const { moveFile } = require("../../modules/util");
@@ -26,9 +26,13 @@ router.get("/", queries(), async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", queries(), async (req, res, next) => {
   try {
-    res.render("admin/prd/prd-form");
+    const prd = await Product.findOne({
+      where: { id: req.params.id },
+      include: [{ model: Cate, attributes: ["id"] }],
+    });
+    res.render("admin/prd/prd-update", { prd });
   } catch (err) {
     next(createError(err));
   }
