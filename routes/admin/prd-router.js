@@ -73,18 +73,27 @@ router.put("/", async (req, res, next) => {
   }
 });
 
-router.put("/status", async (req, res, next) => {
+router.put("/status", queries("body"), async (req, res, next) => {
   try {
-    res.send("hi");
-    // res.redirect('/admin/prd');
+    const { status, id } = req.body;
+    await Product.update({ status }, { where: { id } });
+    res.redirect(res.locals.goList);
   } catch (err) {
     next(createError(err));
   }
 });
 
-router.delete("/", async (req, res, next) => {
+router.delete("/", queries("body"), async (req, res, next) => {
   try {
-    res.redirect("/admin/prd");
+    const { id } = req.body;
+    await Product.destroy({ where: { id } });
+    const files = await ProductFile.findAll({
+      attributes: ["saveName"],
+      where: { prd_id: id },
+    });
+    for (let { saveName } of files) await moveFile(saveName);
+    await ProductFile.destroy({ where: { prd_id: id } });
+    res.redirect(res.locals.goList);
   } catch (err) {
     next(createError(err));
   }

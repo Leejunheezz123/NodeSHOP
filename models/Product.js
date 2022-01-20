@@ -143,7 +143,13 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       offset: pager.startIdx,
       limit: pager.listCnt,
       where: sequelize.getWhere(query),
-      include: [{ model: ProductFile, attributes: ["saveName", "fileType"] }],
+      include: [
+        {
+          model: ProductFile,
+          attributes: ["saveName", "fileType"],
+          order: [["id", "asc"]],
+        },
+      ],
     });
     const lists = this.getViewData(rs);
 

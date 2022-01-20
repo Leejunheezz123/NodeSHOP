@@ -50,8 +50,15 @@
             </form>
           </td>
           <td>
-            <a href="/<%= currents[0] %>/<%= currents[1] %>/<%= v.id %>" class="btn btn-success">수정</a>
-            <a href="/<%= currents[0] %>/prd/1" class="btn btn-danger">삭제</a>
+            <a href="<%= goPath %>/<%= v.id %>" class="btn btn-success">수정</a>
+            <form class="d-inline-block" action="<%= goPath %>" method="POST" onsubmit="return confirm('삭제하시겠습니까?') ? true : false;">
+              <input type="hidden" name="id" value="<%= v.id %>">
+              <input type="hidden" name="_method" value="DELETE">
+              <% for(let v2 of goLists) { %>
+                <input type="hidden" name="<%= v2.key %>" value="<%= v2.value %>">
+              <% } %>
+              <button class="btn btn-danger">삭제</button>
+            </form>
           </td>
         </tr>
       <% } %>
