@@ -104,7 +104,7 @@ module.exports = (sequelize, { DataTypes, Op }) => {
         if (v.BoardFiles.length) {
           for (let file of v.BoardFiles) {
             let obj = {
-              thumbSrc: relPath(file.saveName),
+              thumbSrc: file.fileType === "I" ? relPath(file.saveName) : null,
               name: file.oriName,
               id: file.id,
               type: file.fileType,

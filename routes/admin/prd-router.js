@@ -16,9 +16,11 @@ router.get("/", (req, res, next) => {
   } else next();
 });
 
-router.get("/", async (req, res, next) => {
+router.get("/", queries(), async (req, res, next) => {
   try {
-    res.render("admin/prd/prd-list");
+    const { lists, pager, totalRecord } = await Product.getLists(req.query, ProductFile);
+    res.json({ lists, pager, totalRecord });
+    // res.render('admin/prd/prd-list', { lists, pager, totalRecord });
   } catch (err) {
     next(createError(err));
   }
