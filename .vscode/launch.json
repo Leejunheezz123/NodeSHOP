@@ -5,6 +5,12 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "command": "cross-env NODE_ENV=development nodemon app",
+      "name": "Run npm start",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
       "command": "npm run serve",
       "name": "Run Backend",
       "request": "launch",

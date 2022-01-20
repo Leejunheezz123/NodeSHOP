@@ -109,18 +109,21 @@ module.exports = (sequelize, { DataTypes, Op }) => {
             }
           }
         } else {
+          // list
           if (v.ProductFiles.length) {
             for (let file of v.ProductFiles) {
               if (file.fileType === "I") {
                 v.img = {
                   thumbSrc: relPath(file.saveName),
-                  name: file.oriName,
-                  id: file.id,
-                  type: file.fileType,
                 };
                 break;
               }
             }
+          }
+          if (!v.img) {
+            v.img = {
+              thumbSrc: "https://via.placeholder.com/120",
+            };
           }
         }
         delete v.createdAt;
@@ -139,16 +142,18 @@ module.exports = (sequelize, { DataTypes, Op }) => {
     const pager = createPager(page, totalRecord, listCnt, pagerCnt);
 
     const rs = await this.findAll({
-      order: [[field, sort]],
       offset: pager.startIdx,
       limit: pager.listCnt,
       where: sequelize.getWhere(query),
       include: [
         {
           model: ProductFile,
-          attributes: ["saveName", "fileType"],
-          order: [["id", "asc"]],
+          attributes: ["id", "saveName", "fileType"],
         },
+      ],
+      order: [
+        [field, sort],
+        [ProductFile, "id", "ASC"],
       ],
     });
     const lists = this.getViewData(rs);

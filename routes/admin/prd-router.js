@@ -10,7 +10,7 @@ const afterUploader = require("../../middlewares/after-multer-mw");
 const { moveFile } = require("../../modules/util");
 const queries = require("../../middlewares/query-mw");
 
-router.get("/", (req, res, next) => {
+router.get("/", queries(), (req, res, next) => {
   if (req.query.type === "create") {
     res.render("admin/prd/prd-form");
   } else next();
