@@ -63,7 +63,7 @@ module.exports = (sequelize, { DataTypes, Op }) => {
     Product.hasMany(models.ProductFile, {
       foreignKey: {
         name: "prd_id",
-        allowNull: false,
+        allowNull: true,
       },
       sourceKey: "id",
       onUpdate: "CASCADE",
@@ -72,7 +72,6 @@ module.exports = (sequelize, { DataTypes, Op }) => {
     Product.belongsToMany(models.Cate, {
       foreignKey: {
         name: "prd_id",
-        allowNull: false,
       },
       through: "cate_product",
       onUpdate: "CASCADE",
@@ -89,6 +88,7 @@ module.exports = (sequelize, { DataTypes, Op }) => {
   Product.findProduct = async function (id, Cate, ProductFile) {
     const rs = await this.findOne({
       where: { id },
+      order: [[ProductFile, "id", "asc"]],
       include: [{ model: Cate }, { model: ProductFile }],
     });
     const data = rs.toJSON();
