@@ -27,7 +27,7 @@ $("#jstreeWrap")
 
 function onLoadedTree(e, data) {
   allData = data.instance._model.data;
-  console.log(allData);
+  // $('#jstreeWrap').jstree('check_node', 'j1_11');
 }
 
 function onChangeTree(e, data) {
@@ -91,6 +91,9 @@ var quill = new Quill("#editor", {
   },
   theme: "snow",
 });
+
+// const delta = quill.clipboard.convert(html);
+// quill.setContents(delta);
 
 $('form[name="prdCreateForm"]').submit(onSubmitPrdCreateForm);
 function onSubmitPrdCreateForm(e) {
