@@ -9,16 +9,7 @@ const db = {};
 
 Sequelize.prototype.getWhere = function ({ field, search }) {
   let where = {};
-  if (field === "all") {
-    // 상품검색
-    where = {
-      [Op.or]: {
-        title: { [Op.like]: "%" + search + "%" },
-        summary: { [Op.like]: "%" + search + "%" },
-        content: { [Op.like]: "%" + search + "%" },
-      },
-    };
-  } else if (field === "tel") {
+  if (field === "tel") {
     // 회원검색
     where = this.where(this.fn("replace", this.col("tel"), "-", ""), {
       [Op.like]: "%" + search.replace(/-/g, "") + "%",

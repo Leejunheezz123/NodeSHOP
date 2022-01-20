@@ -73,6 +73,15 @@ router.put("/", async (req, res, next) => {
   }
 });
 
+router.put("/status", async (req, res, next) => {
+  try {
+    res.send("hi");
+    // res.redirect('/admin/prd');
+  } catch (err) {
+    next(createError(err));
+  }
+});
+
 router.delete("/", async (req, res, next) => {
   try {
     res.redirect("/admin/prd");

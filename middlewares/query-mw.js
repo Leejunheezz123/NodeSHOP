@@ -33,6 +33,7 @@ module.exports = (_field = "query", addQuery = []) => {
     res.locals.goPath = goPath;
     res.locals.goQuery = `${goQuery}&page=${req[_field].page}`;
     res.locals.goView = `${goPath}/${req.params.id}?${goQuery}&page=${req[_field].page}`;
+    res.locals.goUpdate = `${goPath}/${req.params.id}`;
 
     res.locals.goLists = [
       { key: "page", value: req[_field].page },
