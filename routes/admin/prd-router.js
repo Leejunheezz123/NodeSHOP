@@ -28,10 +28,7 @@ router.get("/", queries(), async (req, res, next) => {
 
 router.get("/:id", queries(), async (req, res, next) => {
   try {
-    const prd = await Product.findOne({
-      where: { id: req.params.id },
-      include: [{ model: Cate, attributes: ["id"] }],
-    });
+    const prd = await Product.findProduct(req.params.id, Cate, ProductFile);
     res.render("admin/prd/prd-update", { prd });
   } catch (err) {
     next(createError(err));
