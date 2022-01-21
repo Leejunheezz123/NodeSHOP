@@ -44,11 +44,18 @@ router.post(
   async (req, res, next) => {
     try {
       if (req.body.type === "update") {
-        // await Board.update(req.body, { where: { id: req.body.id } });
-        // req.files.forEach((file) => (file.board_id = req.body.id));
-        // const files = await BoardFile.bulkCreate(req.files);
+        req.body.content = escape(req.body.content);
+        await Product.update(req.body, { where: { id: req.body.id } });
+        req.files.forEach((file) => (file.prd_id = req.body.id));
+        const files = await ProductFile.bulkCreate(req.files);
+        await CateProduct.destroy({ where: { prd_id: req.body.id } });
+        const catePrd = req.body.cate.split(",").map((cate) => ({
+          cate_id: cate,
+          prd_id: req.body.id,
+        }));
+        if (req.body.cate !== "") await CateProduct.bulkCreate(catePrd);
         // res.json({ file: req.files, req: req.body, locals: res.locals });
-        // res.redirect(res.locals.goList);
+        res.redirect(res.locals.goList);
       } else {
         req.body.content = escape(req.body.content);
         const product = await Product.create(req.body);
