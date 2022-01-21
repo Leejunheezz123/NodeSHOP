@@ -29,7 +29,8 @@ router.get("/", queries(), async (req, res, next) => {
 router.get("/:id", queries(), async (req, res, next) => {
   try {
     const prd = await Product.findProduct(req.params.id, Cate, ProductFile);
-    res.render("admin/prd/prd-update", { prd });
+    const cate = prd.Cates.map((v) => v.id);
+    res.render("admin/prd/prd-update", { prd, cate });
   } catch (err) {
     next(createError(err));
   }
