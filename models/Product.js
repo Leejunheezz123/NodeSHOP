@@ -48,7 +48,7 @@ module.exports = (sequelize, { DataTypes, Op }) => {
       },
       readCounter: {
         type: DataTypes.INTEGER(10).UNSIGNED,
-        defaulValue: 0,
+        defaultValue: 0,
       },
     },
     {

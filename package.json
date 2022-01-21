@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Leejunheezz123/SHOP#readme",
   "dependencies": {
+    "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
