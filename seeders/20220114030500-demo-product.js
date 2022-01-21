@@ -11,6 +11,9 @@ module.exports = {
     const products = [];
     const { data: posts } = await axios.get("https://jsonplaceholder.typicode.com/posts");
     for (let i = 0; i < posts.length; i++) {
+      if (i % 3 === 0) {
+        posts[i].body = "&lt;h2&gt;" + posts[i].body + "&lt;/h2&gt;";
+      }
       products.push({
         title: titles[Math.floor(Math.random() * 5)] + "_" + i,
         priceOrigin: Math.floor(Math.random() * 300000) + 30000,

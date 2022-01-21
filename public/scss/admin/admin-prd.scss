@@ -81,6 +81,15 @@
     }
   }
   &.update-wrapper {
+    .selected-tree {
+      @include flex($w: wrap);
+      .tree-data {
+        padding: 0.25em 0.5em;
+        background-color: $white-color;
+        border: 1px solid $light-color;
+        margin: 0.25em;
+      }
+    }
     .file-wrap {
       display: flex;
       align-items: flex-end;

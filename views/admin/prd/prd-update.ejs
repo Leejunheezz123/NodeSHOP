@@ -83,7 +83,7 @@
           <td>이미지 첨부</td>
           <td>
             <% for(let i=0; i<5; i++) { %> 
-              <% if(prd.imgs[i] && prd.imgs[i].type === 'I') { %>
+              <% if(prd.imgs[i]) { %>
                   <div class="file-wrap">
                   <% let { thumbSrc, name, id, type } = prd.imgs[i]; %>
                     <img src="<%= thumbSrc %>" alt="<%= name %>" class="img">
@@ -100,7 +100,16 @@
           <td>상세내용 첨부</td>
           <td>
             <% for(let i=0; i<2; i++) { %> 
-              <input type="file" name="detail" class="form-control-file mb-2">
+              <% if(prd.details[i]) { %>
+                  <div class="file-wrap">
+                  <% let { thumbSrc, name, id, type } = prd.details[i]; %>
+                    <img src="<%= thumbSrc %>" alt="<%= name %>" class="img">
+                    <div class="file"><%= name %></div>
+                    <button type="button" data-name="img" class="btn btn-sm btn-danger" data-idx="<%= id %>" onclick="onDeleteFile('<%= id %>', this)">삭제</button>
+                  </div>
+              <% } else { %>
+                <input type="file" name="img" class="form-control-file mb-2">
+              <% } %>
             <% } %>
           </td>
         </tr>
