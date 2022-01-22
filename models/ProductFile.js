@@ -26,8 +26,12 @@ module.exports = (sequelize, DataTypes) => {
         values: ["I", "F"],
         defaultValue: "I",
       },
+      fieldNum: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       size: {
-        type: DataTypes.INTEGER(10),
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },
