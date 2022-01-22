@@ -3,8 +3,9 @@ const router = express.Router();
 const createError = require("http-errors");
 const { alert, moveFile } = require("../../modules/util");
 const db = require("../../models");
+const { isAdmin } = require("../../middlewares/auth-mw");
 
-router.delete("/file/:id", async (req, res, next) => {
+router.delete("/file/:id", isAdmin(8, "API"), async (req, res, next) => {
   try {
     const modelName = req.query.modelName || "BoardFile";
     const { id } = req.params;

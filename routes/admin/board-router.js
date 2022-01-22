@@ -9,6 +9,7 @@ const counter = require("../../middlewares/board-counter-mw");
 const queries = require("../../middlewares/query-mw");
 const { Board, BoardFile, BoardComment } = require("../../models");
 const { moveFile } = require("../../modules/util");
+const { isAdmin } = require("../../middlewares/auth-mw");
 
 // 신규글 작성
 router.get("/", boardInit(), queries(), (req, res, next) => {
@@ -89,7 +90,7 @@ router.post(
   }
 );
 
-router.delete("/", boardInit(), queries("body"), async (req, res, next) => {
+router.delete("/", isAdmin(8), boardInit(), queries("body"), async (req, res, next) => {
   try {
     await Board.destroy({
       where: { id: req.body.id },
