@@ -13,8 +13,8 @@ router.delete("/file/:id", isAdmin(8, "API"), async (req, res, next) => {
       where: { id },
       attributes: ["saveName"],
     });
-    await db[modelName].destroy({ where: { id } });
     await moveFile(saveName);
+    await db[modelName].destroy({ where: { id } });
     res.status(200).json({ code: 200, result: "success" });
   } catch (err) {
     res.status(500).json(err);
