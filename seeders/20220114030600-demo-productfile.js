@@ -4,6 +4,8 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const imgs = fs.readdirSync(path.join(__dirname, "../storages/220114"));
     const details = fs.readdirSync(path.join(__dirname, "../storages/220120"));
+    imgs.splice(imgs.indexOf("thumb"), 1);
+    details.splice(details.indexOf("thumb"), 1);
     const insertFile = [];
     for (let i = 1; i <= 100; i++) {
       for (let j = 1; j <= 5; j++) {
