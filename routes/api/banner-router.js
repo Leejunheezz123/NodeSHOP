@@ -9,13 +9,13 @@ const boardInit = require("../../middlewares/boardinit-mw");
 router.get(
   "/",
   (req, res, next) => {
-    req.boardId = 5;
+    req.boardId = 4;
     next();
   },
   boardInit(),
   async (req, res, next) => {
     try {
-      const { lists, pager } = await Board.getList(req.query.id, null, BoardFile);
+      const { lists, pager } = await Board.getList("241", null, BoardFile);
       console.log("======");
       console.log(lists[0]);
       res.status(200).json({ list: lists[0] });

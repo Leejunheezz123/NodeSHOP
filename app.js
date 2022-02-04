@@ -21,7 +21,7 @@ require("./modules/sequelize-init")(sequelize, true);
 require("./modules/server-init")(app, process.env.PORT);
 
 /*************** helmet init **************/
-app.use(helmet({ contentSecurityPolicy: false }));
+app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
 
 /*************** static init **************/
 app.use("/", express.static(path.join(__dirname, "public")));
@@ -42,6 +42,13 @@ app.use(session(app));
 app.use((req, res, next) => {
   res.removeHeader("Cross-Origin-Resource-Policy");
   res.removeHeader("Cross-Origin-Embedder-Policy");
+  // res.header("Access-Control-Allow-Headers", "*");
+  // res.header("Access-Control-Allow-Methods", "*");
+  // res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Cross-Origin-Opener-Policy", "*");
+  // res.header("Cross-Origin-Resource-Policy", "*");
+  // res.removeHeader("Cross-Origin-Opener-Policy");
+  // res.removeHeader("Cross-Origin-Resource-Policy");
   next();
 });
 
