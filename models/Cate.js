@@ -65,17 +65,17 @@ module.exports = (sequelize, { DataTypes, Op }) => {
           {
             model: Product,
             where: sequelize.getWhere(query),
-            order: [
-              [field, sort],
-              [ProductFile, "fileType", "ASC"],
-              [ProductFile, "fieldNum", "ASC"],
-            ],
-            /* include: [
+            order: [[field, sort]],
+            include: [
               {
                 model: ProductFile,
-                attributes: ['id', 'saveName', 'fileType', 'fieldNum'],
+                attributes: ["id", "saveName", "fileType", "fieldNum"],
+                order: [
+                  [ProductFile, "fileType", "ASC"],
+                  [ProductFile, "fieldNum", "ASC"],
+                ],
               },
-            ], */
+            ],
           },
         ],
       });
