@@ -15,9 +15,13 @@ router.get(
   boardInit(),
   async (req, res, next) => {
     try {
-      const { lists, pager } = await Board.getList("241", null, BoardFile);
-      console.log("======");
-      console.log(lists[0]);
+      res.header("Access-Control-Allow-Origin", "*");
+      // res.setHeader("Cross-Origin-Resource-Policy", "*");
+      const { lists, pager } = await Board.getList(req.query.id, null, BoardFile);
+      console.log("@@@@@@@@@@@@@@@@@리퀘스트", req.headers);
+      console.log("@@@@@@@@@@@@@@@@@리퀘스트", req.header);
+      // console.log("======");
+      // console.log(lists[0]);
       res.status(200).json({ list: lists[0] });
     } catch (err) {
       console.log(err);

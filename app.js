@@ -40,8 +40,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(method());
 app.use(session(app));
 app.use((req, res, next) => {
-  res.removeHeader("Cross-Origin-Resource-Policy");
-  res.removeHeader("Cross-Origin-Embedder-Policy");
+  // res.header("Cross-Origin-Resource-Policy", "*");
+  // res.header("Cross-Origin-Embedder-Policy", "*");
+  // res.removeHeader("Cross-Origin-Resource-Policy");
+  // res.removeHeader("Cross-Origin-Embedder-Policy");
+  // res.header("Access-Control-Allow-Origin", "*");
   // res.header("Access-Control-Allow-Headers", "*");
   // res.header("Access-Control-Allow-Methods", "*");
   // res.header("Access-Control-Allow-Origin", "*");
